@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}SO LOCATION{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('../assets/css/style.css') }}">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+<!-- header -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Le logo ***** -->
+                    <a href="index.php?p=page-acceuil.php" class="logo">So<em> Location</em></a>
+                    <!-- ***** fin du logo ***** -->
+                    <!-- ***** debut de navbar ***** -->
+                    <ul class="nav" style="display: none">
+                        <li><a href="index.php?p=page-acceuil.php" class="active">accueil</a></li>
+                        <li><a href="index.php?p=page-voitures.php">nos voitures</a></li>
+                        <li><a href="index.php?p=page-apropos.php">a propos de nous </a></li>
+                        <li><a href="index.php?p=page-contact.php">contact</a></li>
+                    </ul>        
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** fin de navbar ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% block body %}{% endblock %}
+
+<!-- footer -->
+<footer class="le_footer container-fluid">
+    <div class=" pt-5 border-bottom">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 mb-3 order-1">
+                <a href="index.php?p=page-acceuil.php" class=""><img src="../assets/images/logo/logo.png" alt="" width="100%" ></a>
+            </div>
+            <div class="col-md-6 col-sm-12 list-footer mx-auto order-2">
+              <div class="row">
+                <div class="col-md-3 col-12  mb-3 mx-auto text-center">
+                  <h6 class="mb-4 font-weight-bold text-uppercase">Accés Rapide</h6>
+                  <ul class="list-group">
+                    <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="index.php?p=page-acceuil.php">Accueil</a></li>
+                    <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="index.php?p=page-voitures.php">Nos voitures</a></li>
+                    <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="index.php?p=page-apropos.php">A propos de nous</a></li>
+                    <li class="list-group-item bg-transparent border-0 p-0 mb-2"><a href="index.php?p=page-contact.php"> Contact</a></li>
+                  </ul>
+                </div>
+
+                <div class="col-md-6 col-12  mb-3  mx-auto text-center">
+                  <h6 class="mb-4 font-weight-bold text-uppercase">Réseaux sociaux</h6>
+                  <ul class="list-group">
+                    <li class="list-group-item bg-transparent border-0 p-0 mb-2">
+                      <a href="https://twitter.com/naologicerp"><i class="fa fa-twitter mr-1"></i> Twitter</a>       
+                    </li class="list-group-item bg-transparent border-0 p-0 mb-2">
+                    <li class="list-group-item bg-transparent border-0 p-0 mb-2">
+                      <a href="https://www.facebook.com/naologic/" target="_blank"><i class="fa fa-facebook mr-1"></i> Facebook</a>
+                    </li>
+                    <li class="list-group-item bg-transparent border-0 p-0 mb-2">
+                      <a href="https://www.youtube.com/channel/UCtHmuf2oQLnksokfz8GIbKA" target="_blank"><i class="fa fa-youtube mr-1"></i> YouTube</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 order-3">
+                <div class="py-4 d-flex justify-content-center align-items-center">
+                <a class="mr-4" href="../privacy.html">Vie privée</a>
+                <a href="../sitemap.xml">Mentions légales</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+<!-- Autres scripts -->
+{% block javascripts %}
+ <!-- jQuery -->
+    <script src="../assets/js/jquery-2.1.0.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="../assets/js/popper.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="../assets/js/scrollreveal.min.js"></script>
+    <script src="../assets/js/waypoints.min.js"></script>
+    <script src="../assets/js/jquery.counterup.min.js"></script>
+    <script src="../assets/js/imgfix.min.js"></script> 
+    <script src="../assets/js/mixitup.js"></script> 
+    <script src="../assets/js/accordions.js"></script>
+    
+    <!-- Global Init -->
+    <script src="../assets/js/custom.js"></script>
+{% endblock %}
+</body>
+</html>

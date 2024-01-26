@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="content">
+   <!-- ***** Banner ***** -->
+    <div class="main-banner" id="top">
+            <video autoplay muted loop id="bg-video">
+                <source src="../assets/images/video/nos_voitures.mp4" type="video/mp4" />
+            </video>
+
+            <div class="video-overlay header-text">
+                <div class="caption">
+                    <h6>Location de voiture de sport</h6>
+                    <h2>meilleur <em>loueur de voiture</em> de sport</h2>
+                    <div class="button_principale">
+                        <a href="index.php?p=page-contact.php">Contactez-Nous</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- ***** fin du Banner  ***** -->
+
+   <!-- ***** Les cards nos voitures ***** -->
+    <section class="section" id="trainers">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading">
+                        <h2>nos <em>voitures</em></h2>
+                        <img src="assets/images/voitures/line-dec.png" alt="">
+                        <p>Voici nos voitures disponible en location</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">  
+                <div class="col-lg-4 mx-auto">
+                    <div class="trainer-item">
+                        <div class="image-thumb">
+                            <img src="../assets/images/voitures/<?php echo $cars['nom_img'] ?>" alt="">
+                        </div>
+                        <div class="down-content">
+                
+                            <h4></h4>
+
+                            <p>
+                                <i class="fa fa-dashboard"></i> chevaux ch
+                                <i class="fa fa-cube"></i>cylindree
+                                <i class="fa fa-cog"></i>transmission
+                            </p>
+
+                            <ul class="social-icons">
+                                <li><a href="index.php">+ Voir la voiture</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+
+            <br>
+
+            <div class="button_principale text-center">
+                <a href="index.php?p=page-voitures.php">Voir tout</a>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Fin des cards ***** -->
+
+    
+
+    <!-- ***** Section fonctionnement ***** -->
+    <section class="section " id="info_loc">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading">
+                        <h2>Comment fonctionne la <em>location</em></h2>
+                        <img src="../assets/images/voitures/line-dec.png" alt="">
+                        <p class="text-white">Les informations a connaitre avant de louer une de nos voitures</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="tabs">
+              <div class="col-lg-4">
+                <ul>
+                  <li><a href='#tabs-1'>Une caution est obligatoire (Caution selon la voiture)</a></li>
+                  <li><a href='#tabs-2'>Assurance tres fiable, pour vous proteger</a></li>
+                  <li><a href='#tabs-3'>Tarifs defiant toute concurance </a></li>
+                </ul>
+              </div>
+              <div class="col-lg-8">
+                <section class='tabs-content'>
+                  <article id='tabs-1'>
+                    <img src="../assets/images/encaisser-cheque.jpg" alt="">
+                    <h4>La caution comment sa marche ? </h4>
+                    <p>
+                         Une caution est obligatoire, mais pourquoi ? <br>
+                        Cette caution couvre notre agence en cas d'amendes ou de pénalité pendant que notre vehicule est conduit par nos clients,
+                        la caution sert à payer ces dégâts
+                    </p>
+                    <div class="button_principale">
+                        <a href="blog-details.html">Voir nos voitures</a>
+                    </div>
+                  </article>
+                  <article id='tabs-2'>
+                    <img src="../assets/images/assurance-auto.jpg" alt="">
+                    <h4>L'assurance voitures</h4>
+                    <p>
+                       Tous nos véhicules sont assuré tous risques,<br> en cas d'accident notre assurance prendra en charge les dégâts effectuer sur nos véhicules 
+                    </p>
+                    <div class="button_principale">
+                        <a href="blog-details.html">Voir nos voitures</a>
+                    </div>
+                  </article>
+                  <article id='tabs-3'>
+                    <img src="../assets/images/prix_reduits.png" alt="">
+                    <h4>Nos tarifs </h4>
+                    <p>
+                        Les tarifs de nos vehicules sont les plus bas sur le marché, <br> vous pouvez vous faire plaisir même avec de petits moyens
+                    </p>
+                    <div class="button_principale">
+                        <a href="blog-details.html">Voir nos voitures</a>
+                    </div>
+                  </article>
+                </section>
+              </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Fin Section fonctionnement ***** -->
+
+    <!-- ***** Section question-contact ***** -->
+    <section class="section section-bg" id="call-to-action" style="background-image: url(../assets/images/voitures/banner-image-1-1920x500.jpg)">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <h2>une <em>question ?</em></h2>
+                        <p>
+                            Vous souhaitez obtenir une information complémentaire sur nos gammes de produits  et les services proposés ?
+                            <br> Le Service Commercial So Location vous recontactera rapidement et répondra à toutes vos questions.
+                        </p>
+                        <div class="button_principale">
+                            <a href="index.php?p=page-contact.php">Contactez-nous</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Section question-contact ***** -->
+
+    <!-- ***** Section avis ***** -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading">
+                        <h2>les avis <em>clients</em></h2>
+                        <img src="../assets/images/line-dec.png" alt="waves">
+                        <p>Voici les avis laissez par nos clients</p>
+                    </div>
+                </div>
+                <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+                <div class="elfsight-app-91837f89-e4e5-4d8c-946e-52fc5d356872"></div>
+            </div>
+            <br>
+        </div>
+    </section>
+</div>
+{% endblock %}
