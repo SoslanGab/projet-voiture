@@ -97,7 +97,7 @@ class Client implements UserInterface
 
         return $this;
     }
-
+    
     public function getDateCreation(): ?\DateTimeInterface
     {
         return $this->date_creation;
