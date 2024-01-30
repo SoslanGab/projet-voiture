@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello VoituresController!{% endblock %}
+
+{% block body %}
+
+ <!-- ***** banner ***** -->
+    <section class="section section-bg" id="call-to-action" style="background-image: url(assets/images/voitures/img_banner.jpg)">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <br>
+                        <br>
+                        <h2>nos <em>Voitures</em></h2>
+                        <p>Voici toutes nos voitures en locations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** banner ***** -->
+
+    <!-- ***** nos voitures ***** -->
+    <section class="section" id="trainers">
+        <div class="container">
+            <div class="col-lg-12 offset-lg-3 mx-auto">
+                <div class="section-heading">
+                    <h2>nos <em>voitures</em></h2>
+                    <p>Voici nos voitures disponible en location</p>
+                </div>
+            </div>  
+            <div class="row">    
+                <div class="col-lg-4 mx-auto">
+                    <div class="trainer-item">
+                        <div class="image-thumb">
+                            <img src="assets/images/voitures/<?php echo $cars['nom_img'] ?>" alt="">
+                        </div>
+                        <div class="down-content">
+                            <h4></h4>
+                            <p>
+                                <i class="fa fa-dashboard"></i>  ch
+                                <i class="fa fa-cube"></i>  
+                                <i class="fa fa-cog"></i> 
+                            </p>
+                            <ul class="social-icons">
+                                <li><a href="">+ Voir la voiture</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <br>
+        </div>
+    </section>
+    <!-- ***** nos voitures***** -->
+
+    <!-- ***** Une questions ? ***** -->
+    <section class="section section-bg" id="call-to-action" style="background-image: url(assets/images/voitures/banner-image-1-1920x500.jpg)">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <h2>une  <em>question ?</em></h2>
+                        <p>Vous souhaitez obtenir une information complémentaire sur nos gammes de produits et les services proposés ? <br> Le Service Commercial So Location vous recontactera rapidement et répondra à toutes vos questions. </p>
+                        <div class="button_principale">
+                            <a href="index.php?p=page-contact.php">Contactez-nous</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
