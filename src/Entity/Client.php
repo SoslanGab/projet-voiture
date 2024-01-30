@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use App\Repository\ClientRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,8 +37,8 @@ class Client implements UserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $telephone = null;
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $telephone = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $derniere_connexion = null;
@@ -51,15 +52,17 @@ class Client implements UserInterface
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $permisVersoPath = null;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Locations::class)]
+    private Collection $locations;
+
+    public function __construct()
+    {
+        $this->locations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-    public function getRoles(): array
-    {
-        // TODO: Implement getRoles() method. Pour simplifier, retourner un array de rôles. Ex: ['ROLE_USER']
-        return ['ROLE_USER'];
     }
 
     public function getEmail(): ?string
@@ -67,10 +70,9 @@ class Client implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(?string $email): static
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -79,10 +81,9 @@ class Client implements UserInterface
         return $this->nom_utilisateur;
     }
 
-    public function setNomUtilisateur(?string $nom_utilisateur): static
+    public function setNomUtilisateur(?string $nom_utilisateur): self
     {
         $this->nom_utilisateur = $nom_utilisateur;
-
         return $this;
     }
 
@@ -91,22 +92,20 @@ class Client implements UserInterface
         return $this->mot_de_pass;
     }
 
-    public function setMotDePass(?string $mot_de_pass): static
+    public function setMotDePass(?string $mot_de_pass): self
     {
         $this->mot_de_pass = $mot_de_pass;
-
         return $this;
     }
-    
+
     public function getDateCreation(): ?\DateTimeInterface
     {
         return $this->date_creation;
     }
 
-    public function setDateCreation(?\DateTimeInterface $date_creation): static
+    public function setDateCreation(?\DateTimeInterface $date_creation): self
     {
         $this->date_creation = $date_creation;
-
         return $this;
     }
 
@@ -115,10 +114,9 @@ class Client implements UserInterface
         return $this->nom;
     }
 
-    public function setNom(?string $nom): static
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -127,10 +125,9 @@ class Client implements UserInterface
         return $this->prenom;
     }
 
-    public function setPrenom(?string $prenom): static
+    public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
@@ -139,22 +136,20 @@ class Client implements UserInterface
         return $this->adresse;
     }
 
-    public function setAdresse(?string $adresse): static
+    public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
-
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(?int $telephone): static
+    public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
-
         return $this;
     }
 
@@ -163,10 +158,9 @@ class Client implements UserInterface
         return $this->derniere_connexion;
     }
 
-    public function setDerniereConnexion(?\DateTimeInterface $derniere_connexion): static
+    public function setDerniereConnexion(?\DateTimeInterface $derniere_connexion): self
     {
         $this->derniere_connexion = $derniere_connexion;
-
         return $this;
     }
 
@@ -175,12 +169,12 @@ class Client implements UserInterface
         return $this->email_verifie;
     }
 
-    public function setEmailVerifie(?bool $email_verifie): static
+    public function setEmailVerifie(?bool $email_verifie): self
     {
         $this->email_verifie = $email_verifie;
-
         return $this;
     }
+
     public function getPermisRectoPath(): ?string
     {
         return $this->permisRectoPath;
@@ -201,6 +195,66 @@ class Client implements UserInterface
     {
         $this->permisVersoPath = $permisVersoPath;
         return $this;
-        
+    }
+
+    // Méthodes requises par l'interface UserInterface
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->getMotDePass();
+    }
+
+    public function getSalt()
+    {
+        return null; // Non nécessaire pour les algorithmes modernes de hachage
+    }
+
+    public function getUsername(): string
+    {
+        return $this->getNomUtilisateur();
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getNomUtilisateur();
+    }
+
+    public function eraseCredentials()
+    {
+        // Utilisé pour nettoyer les données sensibles temporaires
+    }
+
+    /**
+     * @return Collection<int, Locations>
+     */
+    public function getLocations(): Collection
+    {
+        return $this->locations;
+    }
+
+    public function addLocation(Locations $location): static
+    {
+        if (!$this->locations->contains($location)) {
+            $this->locations->add($location);
+            $location->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocation(Locations $location): static
+    {
+        if ($this->locations->removeElement($location)) {
+            // set the owning side to null (unless already changed)
+            if ($location->getClient() === $this) {
+                $location->setClient(null);
+            }
+        }
+
+        return $this;
     }
 }

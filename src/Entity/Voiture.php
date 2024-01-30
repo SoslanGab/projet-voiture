@@ -37,9 +37,17 @@ class Voiture
     #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: Locations::class)]
     private Collection $locations;
 
+    #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: DommageVoiture::class)]
+    private Collection $dommageVoitures;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?typevoiture $type = null;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
+        $this->dommageVoitures = new ArrayCollection();
+        $this->type = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,6 +153,48 @@ class Voiture
                 $location->setVoiture(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DommageVoiture>
+     */
+    public function getDommageVoitures(): Collection
+    {
+        return $this->dommageVoitures;
+    }
+
+    public function addDommageVoiture(DommageVoiture $dommageVoiture): static
+    {
+        if (!$this->dommageVoitures->contains($dommageVoiture)) {
+            $this->dommageVoitures->add($dommageVoiture);
+            $dommageVoiture->setVoiture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDommageVoiture(DommageVoiture $dommageVoiture): static
+    {
+        if ($this->dommageVoitures->removeElement($dommageVoiture)) {
+            // set the owning side to null (unless already changed)
+            if ($dommageVoiture->getVoiture() === $this) {
+                $dommageVoiture->setVoiture(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?typevoiture
+    {
+        return $this->type;
+    }
+
+    public function setType(?typevoiture $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

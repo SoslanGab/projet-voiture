@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LocationsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,17 @@ class Locations
 
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $statut = null;
+
+    #[ORM\ManyToOne(inversedBy: 'locations')]
+    private ?client $client = null;
+
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: SanctionsLocatives::class)]
+    private Collection $sanctionsLocatives;
+
+    public function __construct()
+    {
+        $this->sanctionsLocatives = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +103,48 @@ class Locations
     public function setStatut(?string $statut): static
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getClient(): ?client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?client $client): static
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SanctionsLocatives>
+     */
+    public function getSanctionsLocatives(): Collection
+    {
+        return $this->sanctionsLocatives;
+    }
+
+    public function addSanctionsLocative(SanctionsLocatives $sanctionsLocative): static
+    {
+        if (!$this->sanctionsLocatives->contains($sanctionsLocative)) {
+            $this->sanctionsLocatives->add($sanctionsLocative);
+            $sanctionsLocative->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSanctionsLocative(SanctionsLocatives $sanctionsLocative): static
+    {
+        if ($this->sanctionsLocatives->removeElement($sanctionsLocative)) {
+            // set the owning side to null (unless already changed)
+            if ($sanctionsLocative->getLocation() === $this) {
+                $sanctionsLocative->setLocation(null);
+            }
+        }
 
         return $this;
     }
