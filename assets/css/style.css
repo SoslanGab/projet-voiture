@@ -1092,3 +1092,32 @@ footer
 
 /* fin footer */
 
+/* Icon connexion/inscription */
+.user-icon {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.login-box {
+  position: absolute;
+  right: 0;
+  top: 60px; /* Ajustez en fonction de la hauteur de votre en-tête */
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  padding: 10px;
+  z-index: 100;
+  display: none; /* Important pour que la boîte soit cachée par défaut */
+}
+
+@media (max-width: 768px) {
+  .user-icon {
+      position: fixed;
+      right: 10px;
+      top: 10px;
+  }
+  .login-box {
+      position: fixed;
+  }
+}

@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}SO LOCATION{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('../assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('../assets/css/font-awesome.css') }}">
@@ -28,15 +29,23 @@
                         <li><a href="{{ path('app_public') }}" class="active">accueil</a></li>
                         <li><a href="{{ path('app_voitures') }}">nos voitures</a></li>
                         <li><a href="{{ path('app_apropos') }}">a propos de nous </a></li>
-                        {# <li><a href="{{ path('app_contact') }}">contact</a></li> #}
+                        <li><a href="{{ path('app_contact') }}">contact</a></li>
+                        
                     </ul>        
                     <a class='menu-trigger'>
                         <span>Menu</span>
                     </a>
+                    <div class="user-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
                     <!-- ***** fin de navbar ***** -->
                 </nav>
             </div>
         </div>
+    </div>
+        <!-- Boîte de connexion/inscription -->
+    <div class="login-box" style="display: none;">
+        <!-- Contenu du formulaire ici -->
     </div>
 </header>
 

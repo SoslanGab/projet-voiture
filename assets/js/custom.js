@@ -93,4 +93,19 @@
 			}
 		});
 	}
+
+	
+$(document).ready(function() {
+    $('.user-icon').click(function() {
+        $('.login-box').toggle();
+    });
+
+    // Fermer la boîte de connexion lorsque l'utilisateur clique à l'extérieur
+    $(document).click(function(event) {
+        if (!$(event.target).closest('.login-box, .user-icon').length) {
+            $('.login-box').hide();
+        }
+    });
+});
+
 })(window.jQuery);

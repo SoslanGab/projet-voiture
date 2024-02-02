@@ -23,4 +23,12 @@ class PublicController extends AbstractController
             'controller_name' => 'PublicController',
         ]);
     }
+
+    #[Route('/contact', name: 'app_contact')]
+    public function contact(): Response
+    {
+        return $this->render('Public/contact.html.twig', [
+            'controller_name' => 'PublicController',
+        ]);
+    }
 }
