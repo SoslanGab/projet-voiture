@@ -15,4 +15,12 @@ class PublicController extends AbstractController
             'controller_name' => 'PublicController',
         ]);
     }
+
+    #[Route('/a-propos', name: 'app_apropos')]
+    public function apropos(): Response
+    {
+        return $this->render('Public/apropos.html.twig', [
+            'controller_name' => 'PublicController',
+        ]);
+    }
 }
