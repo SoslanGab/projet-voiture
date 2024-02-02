@@ -1094,7 +1094,6 @@ footer
 
 /* Icon connexion/inscription */
 .user-icon {
-  position: absolute;
   right: 20px;
   top: 20px;
   cursor: pointer;
@@ -1110,7 +1109,14 @@ footer
   z-index: 100;
   display: none; /* Important pour que la boîte soit cachée par défaut */
 }
-
+.login-box .btn-icon{
+ border: none;
+  background-color: #ed563b ;
+  color: white;
+}
+.login-box .text-inscrit{
+  color: #ed563b;
+}
 @media (max-width: 768px) {
   .user-icon {
       position: fixed;
