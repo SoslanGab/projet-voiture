@@ -33,17 +33,5 @@ class PublicController extends AbstractController
         ]);
     }
 
-    #[Route('/inscription', name: 'inscription')]
-    public function inscription(): Response
-    {
-        return $this->render('Public/inscription.html.twig', [
-            'controller_name' => 'PublicController',
-        ]);
-    }
-
-    #[Route('/inscription/submit', name: 'app_inscription_submit')]
-    public function submit(Request $request): Response
-    {
-        return $this->redirectToRoute('app_public');
-    }
+  
 }
