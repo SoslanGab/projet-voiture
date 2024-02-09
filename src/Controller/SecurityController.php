@@ -40,14 +40,14 @@ class SecurityController extends AbstractController
         return $this->render('security/inscription.html.twig');
     }
 
-    public function submit(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
-    {
+    #[Route('/inscription/submit', name: 'app_inscription_submit', methods: ['POST'])]
+    public function submit(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response {
         $client = new Client();
-        $client->setEmail($request->request->get('email'));
-        $client->setNomUtilisateur($request->request->get('username'));
+       
         $password = $passwordHasher->hashPassword($client, $request->request->get('password'));
-        $client->setMotDePass($password);
-    
+        $client->setPassword($password);
+        
+        // Enregistrement
         $entityManager->persist($client);
         $entityManager->flush();
     
