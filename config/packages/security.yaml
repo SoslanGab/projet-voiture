@@ -28,6 +28,9 @@ security:
                 secret:   '%kernel.secret%'
                 lifetime: 604800 # 1 semaine en secondes
                 path:     /
+                always_remember_me: true
+            custom_authenticator: App\Security\UserAuthenticator
+            entry_point: 'form_login'
 
     # Restriction d'accès par rôles
     access_control:

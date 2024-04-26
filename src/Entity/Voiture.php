@@ -41,7 +41,7 @@ class Voiture
     private Collection $dommageVoitures;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?typevoiture $type = null;
+    private ?Typevoiture $type = null;
 
     public function __construct()
     {

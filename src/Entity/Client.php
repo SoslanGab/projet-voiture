@@ -3,13 +3,16 @@
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\ClientRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-class Client implements UserInterface
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class Client implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,7 +25,7 @@ class Client implements UserInterface
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $nom_utilisateur = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 500, nullable: true)]
     private ?string $mot_de_pass = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -54,6 +57,12 @@ class Client implements UserInterface
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Locations::class)]
     private Collection $locations;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
+
+    #[ORM\Column]
+    private array $roles = [];
 
     public function __construct()
     {
@@ -197,10 +206,24 @@ class Client implements UserInterface
         return $this;
     }
 
-    // Méthodes requises par l'interface UserInterface
+  
+     /**
+     * @see UserInterface
+     */
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     public function getPassword(): string
@@ -210,7 +233,7 @@ class Client implements UserInterface
 
     public function getSalt()
     {
-        return null; // Non nécessaire pour les algorithmes modernes de hachage
+        return null; 
     }
 
     public function getUsername(): string
@@ -220,12 +243,12 @@ class Client implements UserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->getNomUtilisateur();
+        return $this->getEmail();
     }
 
     public function eraseCredentials()
     {
-        // Utilisé pour nettoyer les données sensibles temporaires
+        
     }
 
     /**
@@ -254,6 +277,18 @@ class Client implements UserInterface
                 $location->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

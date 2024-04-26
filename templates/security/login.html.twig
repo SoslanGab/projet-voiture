@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        Sign in
+    </button>
+</form>
+
+
+
+
+<section class="section section-bg" id="call-to-action" style="background-image: url({{ asset('assets/images/voitures/banner-image-1-1920x500.jpg') }})">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="cta-content">
+                    <h2>Bienvenue <em>Connectez-vous</em></h2>
+                    <p>Connectez-vous à votre compte pour continuer à profiter de nos services exclusifs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container mt-5 ">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card" style="font-family: 'Poppins', sans-serif;">
+                <div class="card-body">
+
+
+
+
+                    <h1 class="card-title" style="color: #ed563b;">Connexion</h1>
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <form action="{{ path('app_login') }}" method="post" class="mt-4">
+                        <div class="form-group">
+                            <label for="username">Email:</label>
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" required autofocus class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mot de passe:</label>
+                            <input type="password" id="password" name="_password" required class="form-control">
+                        </div>
+                        <button type="submit" class="btn" style="background-color: #ed563b; color: white;">Se connecter</button>
+                    </form>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<section class="section section-bg mt-5" id="call-to-action" style="background-image: url(assets/images/voitures/banner-image-1-1920x500.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="cta-content">
+                    <h2>Une <em>question ?</em></h2>
+                    <p>Vous souhaitez obtenir une information complémentaire sur nos gammes de produits et les services proposés ? <br> Le Service Commercial So Location vous recontactera rapidement et répondra à toutes vos questions.</p>
+                    <div class="main-button">
+                        <a href="index.php?p=page-contact.php">Contactez-nous</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
