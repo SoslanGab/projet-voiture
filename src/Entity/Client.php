@@ -3,7 +3,7 @@
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\ClientRepository;
 use Doctrine\DBAL\Types\Types;
@@ -25,7 +25,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $nom_utilisateur = null;
 
-    #[ORM\Column(length: 500, nullable: true)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $mot_de_pass = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -58,12 +58,6 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Locations::class)]
     private Collection $locations;
 
-    #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
-
-    #[ORM\Column]
-    private array $roles = [];
-
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -85,6 +79,15 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPassword(): string {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self {
+        $this->password = $password;
+        return $this;
+    }
+
     public function getNomUtilisateur(): ?string
     {
         return $this->nom_utilisateur;
@@ -96,16 +99,6 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getMotDePass(): ?string
-    {
-        return $this->mot_de_pass;
-    }
-
-    public function setMotDePass(?string $mot_de_pass): self
-    {
-        $this->mot_de_pass = $mot_de_pass;
-        return $this;
-    }
 
     public function getDateCreation(): ?\DateTimeInterface
     {
@@ -206,10 +199,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-  
-     /**
-     * @see UserInterface
-     */
+    // Méthodes requises par l'interface UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -226,29 +216,30 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPassword(): string
-    {
-        return $this->getMotDePass();
-    }
-
     public function getSalt()
     {
-        return null; 
+        return null; // Non nécessaire pour les algorithmes modernes de hachage
     }
 
     public function getUsername(): string
     {
-        return $this->getNomUtilisateur();
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return $this->getEmail();
+        // Ou retourner un autre identifiant unique, selon votre logique d'authentification
+        return $this->email;
     }
 
     public function eraseCredentials()
     {
-        
+        // Nettoyez ici les données sensibles temporaires
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getNomUtilisateur();
+    }
+
+    public function eraseCredentials()
+    {
+        // Utilisé pour nettoyer les données sensibles temporaires
     }
 
     /**
