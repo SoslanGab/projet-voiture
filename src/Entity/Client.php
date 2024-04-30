@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\ClientRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
@@ -25,8 +26,8 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $nom_utilisateur = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $mot_de_pass = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $password = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_creation = null;
@@ -42,6 +43,9 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $telephone = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $derniere_connexion = null;
@@ -234,12 +238,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->getNomUtilisateur();
-    }
-
-    public function eraseCredentials()
-    {
-        // Utilisé pour nettoyer les données sensibles temporaires
+        return $this->getEmail();
     }
 
     /**
@@ -274,12 +273,12 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function isVerified(): bool
     {
-        return $this->isVerified;
+        return $this->email_verifie;
     }
 
-    public function setIsVerified(bool $isVerified): static
+    public function setIsVerified(bool $email_verifie): static
     {
-        $this->isVerified = $isVerified;
+        $this->email_verifie = $email_verifie;
 
         return $this;
     }

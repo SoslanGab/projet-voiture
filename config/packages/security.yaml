@@ -20,8 +20,8 @@ security:
             lazy: true
             provider: app_client_provider
             form_login:
-                login_path: login # Mettez à jour cette route vers votre page de connexion
-                check_path: login # Mettez à jour cette route pour le traitement du formulaire de connexion
+                login_path: app_login # Mettez à jour cette route vers votre page de connexion
+                check_path: app_login # Mettez à jour cette route pour le traitement du formulaire de connexion
             logout:
                 path: app_logout # Mettez à jour cette route pour la déconnexion
             remember_me:
