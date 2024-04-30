@@ -1,9 +1,10 @@
+{# templates/security/login.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
+{# <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -27,59 +28,73 @@
     <button class="btn btn-lg btn-primary" type="submit">
         Sign in
     </button>
-</form>
+</form> #}
 
 
 
+<div class="page">
 
+        
+<!-- Page Content-->
+       
 <section class="section section-bg" id="call-to-action" style="background-image: url({{ asset('assets/images/voitures/banner-image-1-1920x500.jpg') }})">
     <div class="container">
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <div class="cta-content">
-                    <h2>Bienvenue <em>Connectez-vous</em></h2>
-                    <p>Connectez-vous à votre compte pour continuer à profiter de nos services exclusifs.</p>
+                        <!-- si vous etes connecter -->
+                            {% if app.user %}
+                                <div class="mb-3">
+                                    Vous êtes connecté en tant que {{ app.user.username }}, <a class="red" href="{{ path('app_logout') }}">Déconnexion</a>
+                                </div>
+                                <h2>Bienvenue <em>{{ app.user.username }}</em></h2>
+                                <p>Vous êtes déjà connecté et prêt à profiter de nos services exclusifs.</p>
+                            {% else %}
+                                <h2>Bienvenue</h2>
+                                <p>Connectez-vous ou créez un compte pour continuer à profiter de nos services exclusifs.</p>
+                                
+                            <h3 class="text-extrabold">Log in to your account</h3>
+                            {% if error %}
+                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+
+                                {% if app.user %}
+                                    <div class="mb-3">
+                                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                    </div>
+                                {% endif %}
+
+                        <div class="container mt-5">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="card" style="font-family: 'Poppins', sans-serif;">
+                                        <div class="card-body">   
+                                            <form method="post">
+                                                <div class="form-group">
+                                                    <label for="inputEmail">Email</label>
+                                                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputPassword">Password</label>
+                                                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                                                </div>
+                                                <input type="hidden" name="_csrf_token"
+                                                    value="{{ csrf_token('authenticate') }}"
+                                                >
+                                                <a href="{{path('app_forgot_password_request')}}">Password forgotten ?</a>
+                                                <button type="submit" class="btn" style="background-color: #ed563b; color: white;">Se connecter</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}       
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
-<div class="container mt-5 ">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card" style="font-family: 'Poppins', sans-serif;">
-                <div class="card-body">
-
-
-
-
-                    <h1 class="card-title" style="color: #ed563b;">Connexion</h1>
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-                    <form action="{{ path('app_login') }}" method="post" class="mt-4">
-                        <div class="form-group">
-                            <label for="username">Email:</label>
-                            <input type="text" id="username" name="_username" value="{{ last_username }}" required autofocus class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Mot de passe:</label>
-                            <input type="password" id="password" name="_password" required class="form-control">
-                        </div>
-                        <button type="submit" class="btn" style="background-color: #ed563b; color: white;">Se connecter</button>
-                    </form>
-
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 
 
