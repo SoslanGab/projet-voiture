@@ -7,17 +7,78 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <section class="section section-bg" id="call-to-action" style="background-image: url(assets/images/voitures/banner-image-1-1920x500.jpg)">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <br>
+                        <br>
+                        <h2>Rejoignez-nous <em>Inscrivez-vous</em></h2>
+                        <p>Créez votre compte dès maintenant pour profiter de nos services et découvrir nos offres exclusives.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    {{ form_errors(registrationForm) }}
+    
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="form-bg p-4 p-md-5 rounded shadow">
+                <h2 class="mb-4 text-primary">Inscription</h2>
+                {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+                    <div class="mb-3">
+                        {{ form_row(registrationForm.email, {
+                            'label': 'Adresse Email',
+                            'attr': {'class': 'form-control', 'placeholder': 'Entrez votre email'}
+                        }) }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="username">Nom d'utilisateur</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Choisissez un nom d'utilisateur" required>
+                        <div class="invalid-feedback">
+                            Veuillez renseigner un nom d'utilisateur.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(registrationForm.plainPassword.first, {
+                            'label': 'Mot de passe',
+                            'attr': {'class': 'form-control', 'placeholder': 'Créez un mot de passe'}
+                        }) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(registrationForm.plainPassword.second, {
+                            'label': 'Mot de passe',
+                            'attr': {'class': 'form-control', 'placeholder': 'Créez un mot de passe'}
+                        }) }}
+                        <label for="confirm_password">Confirmez le mot de passe</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirmez votre mot de passe" required>
+                        <div class="invalid-feedback">
+                            Les mots de passe ne correspondent pas.
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        {{ form_row(registrationForm.agreeTerms) }}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
