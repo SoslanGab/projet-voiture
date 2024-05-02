@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -22,9 +23,6 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $email = null;
-
-    #[ORM\Column(length: 15, nullable: true)]
-    private ?string $nom_utilisateur = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $password = null;
@@ -83,26 +81,16 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPassword(): string {
+    public function getPassword(): string
+    {
         return $this->password;
     }
 
-    public function setPassword(string $password): self {
+    public function setPassword(string $password): self
+    {
         $this->password = $password;
         return $this;
     }
-
-    public function getNomUtilisateur(): ?string
-    {
-        return $this->nom_utilisateur;
-    }
-
-    public function setNomUtilisateur(?string $nom_utilisateur): self
-    {
-        $this->nom_utilisateur = $nom_utilisateur;
-        return $this;
-    }
-
 
     public function getDateCreation(): ?\DateTimeInterface
     {

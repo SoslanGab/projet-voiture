@@ -32,6 +32,13 @@ class PublicController extends AbstractController
             'controller_name' => 'PublicController',
         ]);
     }
+    #[Route('/profile', name: 'app_profile')]
+    public function profile(): Response
+    {
+        return $this->render('Public/profile.html.twig', [
+            'controller_name' => 'PublicController',
+        ]);
+    }
 
   
 }
