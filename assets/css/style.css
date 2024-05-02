@@ -131,6 +131,10 @@ body {
   font-style: normal;
   color: #ed563b;
 }
+.form-bg h2 em{
+  font-style: normal;
+  color: #ed563b;
+}
 
 .section-heading img {
   margin: 20px auto;
