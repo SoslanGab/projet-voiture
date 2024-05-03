@@ -27,8 +27,19 @@ class ClientController extends AbstractController
 
             return $this->redirectToRoute('app_profile', [], Response::HTTP_SEE_OTHER);
         }
+        // Dire Bonjour ou Bonsoir selon le fuseaux horaire
+        $heure = date('H');
+
+        if ($heure < 12) {
+            $salutation = 'Bonjour';
+        } elseif ($heure < 18) {
+            $salutation = 'Bonjour';
+        } else {
+            $salutation = 'Bonsoir';
+        }
 
         return $this->render('Public/profile.html.twig', [
+            'salutation' => $salutation,
             'client' => $client,
             'form' => $form->createView(),
         ]);
