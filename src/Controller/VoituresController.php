@@ -15,6 +15,11 @@ class VoituresController extends AbstractController
     {
         return $this->render('Public/Voitures/index.html.twig');
     }
+    #[Route('/details', name: 'app_details')]
+    public function details()
+    {
+        return $this->render('Public/Voitures/details-voiture.html.twig');
+    }
 }
 
 

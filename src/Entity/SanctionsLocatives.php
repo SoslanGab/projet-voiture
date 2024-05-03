@@ -15,7 +15,7 @@ class SanctionsLocatives
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'sanctionsLocatives')]
-    private ?locations $location = null;
+    private ?Locations $location = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $montant = null;
@@ -31,12 +31,12 @@ class SanctionsLocatives
         return $this->id;
     }
 
-    public function getLocation(): ?locations
+    public function getLocation(): ?Locations
     {
         return $this->location;
     }
 
-    public function setLocation(?locations $location): static
+    public function setLocation(?Locations $location): static
     {
         $this->location = $location;
 

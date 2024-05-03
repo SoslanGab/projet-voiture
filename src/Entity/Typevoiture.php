@@ -6,7 +6,7 @@ use App\Repository\TypevoitureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TypevoitureRepository::class)]
-class Typevoiture
+class TypeVoiture
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,7 +15,6 @@ class Typevoiture
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $type = null;
-
 
     public function getId(): ?int
     {
@@ -27,10 +26,15 @@ class Typevoiture
         return $this->type;
     }
 
-    public function setType(?string $type): static
+    public function setType(?string $type): self
     {
         $this->type = $type;
-
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->type ?? 'Type non spécifié';  
+    }
 }
+

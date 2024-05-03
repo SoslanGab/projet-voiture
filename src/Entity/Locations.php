@@ -32,7 +32,7 @@ class Locations
     private ?string $statut = null;
 
     #[ORM\ManyToOne(inversedBy: 'locations')]
-    private ?client $client = null;
+    private ?Client $client = null;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: SanctionsLocatives::class)]
     private Collection $sanctionsLocatives;

@@ -17,12 +17,12 @@ class DommageVoiture
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'dommageVoitures')]
-    private ?voiture $voiture = null;
+    private ?Voiture $voiture = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'dommageVoiture', targetEntity: typedommage::class)]
+    #[ORM\OneToMany(mappedBy: 'dommageVoiture', targetEntity: TypeDommage::class)]
     private Collection $damage_type;
 
     public function __construct()
@@ -35,12 +35,12 @@ class DommageVoiture
         return $this->id;
     }
 
-    public function getVoiture(): ?voiture
+    public function getVoiture(): ?Voiture
     {
         return $this->voiture;
     }
 
-    public function setVoiture(?voiture $voiture): static
+    public function setVoiture(?Voiture $voiture): static
     {
         $this->voiture = $voiture;
 

@@ -41,13 +41,19 @@ class Voiture
     private Collection $dommageVoitures;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Typevoiture $type = null;
+    private ?TypeVoiture $type = null;
+
+    /**
+     * @var Collection<int, ImageVoiture>
+     */
+    #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: ImageVoiture::class, orphanRemoval: true)]
+    private Collection $imageVoitures;
 
     public function __construct()
     {
         $this->locations = new ArrayCollection();
         $this->dommageVoitures = new ArrayCollection();
-        $this->type = new ArrayCollection();
+        $this->imageVoitures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,16 +192,48 @@ class Voiture
 
         return $this;
     }
+ 
 
-    public function getType(): ?typevoiture
+    public function getType(): ?TypeVoiture
     {
         return $this->type;
     }
 
-    public function setType(?typevoiture $type): static
+    public function setType(?TypeVoiture $type): static
     {
         $this->type = $type;
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, ImageVoiture>
+     */
+    public function getImageVoitures(): Collection
+    {
+        return $this->imageVoitures;
+    }
+
+    public function addImageVoiture(ImageVoiture $imageVoiture): static
+    {
+        if (!$this->imageVoitures->contains($imageVoiture)) {
+            $this->imageVoitures->add($imageVoiture);
+            $imageVoiture->setVoiture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImageVoiture(ImageVoiture $imageVoiture): static
+    {
+        if ($this->imageVoitures->removeElement($imageVoiture)) {
+            // set the owning side to null (unless already changed)
+            if ($imageVoiture->getVoiture() === $this) {
+                $imageVoiture->setVoiture(null);
+            }
+        }
+
+        return $this;
+    }
+    
 }

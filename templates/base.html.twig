@@ -33,6 +33,13 @@
                         <li><a href="{{ path('app_contact') }}">contact</a></li>
                         <li class="user-icon">
                         <a href="{{ app.user ? path('app_profile') : '#' }}"><i class="fas fa-user fa-lg"></i></a></li>
+                        <li> 
+                           {% if app.user %}
+                                    
+                                       <a class="text-danger" href="{{ path('app_logout') }}">Se déconnecter</a>
+                                    
+                            {% endif %}
+                        </li>
                     </ul>        
                     <a class='menu-trigger'>
                         <span>Menu</span>

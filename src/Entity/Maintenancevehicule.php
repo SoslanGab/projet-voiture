@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MaintenancevehiculeRepository::class)]
-class Maintenancevehicule
+class MaintenanceVehicule
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,7 +15,7 @@ class Maintenancevehicule
     private ?int $id = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?voiture $voiture = null;
+    private ?Voiture $voiture = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $nombre_km = null;
@@ -28,12 +28,12 @@ class Maintenancevehicule
         return $this->id;
     }
 
-    public function getVoiture(): ?voiture
+    public function getVoiture(): ?Voiture
     {
         return $this->voiture;
     }
 
-    public function setVoiture(?voiture $voiture): static
+    public function setVoiture(?Voiture $voiture): static
     {
         $this->voiture = $voiture;
 
