@@ -34,7 +34,7 @@ class ClientController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
+    #[Route('/client/{id}', name: 'app_client_delete', methods: ['POST'])]
     public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->getPayload()->get('_token'))) {

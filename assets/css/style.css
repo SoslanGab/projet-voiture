@@ -1000,8 +1000,10 @@ contact
 
 #contact-us .contact-form #contact {
   background-color: #fff;
-  padding: 40px;
+  padding: 17px;
   border-radius: 5px;
+  margin-top: -73px;
+  margin-bottom: -74px;
 }
 
 .contact-form select,
