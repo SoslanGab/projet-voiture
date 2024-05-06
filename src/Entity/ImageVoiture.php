@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ImageVoitureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: ImageVoitureRepository::class)]
 class ImageVoiture
@@ -28,6 +29,8 @@ class ImageVoiture
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $extension = null;
 
+    private ?File $file = null;
+
     #[ORM\ManyToOne(inversedBy: 'imageVoitures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Voiture $voiture = null;
@@ -45,6 +48,17 @@ class ImageVoiture
     public function setNom(?string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(File $file = null): self
+    {
+        $this->file = $file;
 
         return $this;
     }
@@ -108,4 +122,6 @@ class ImageVoiture
 
         return $this;
     }
+     
+
 }

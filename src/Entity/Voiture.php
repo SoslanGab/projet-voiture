@@ -46,7 +46,7 @@ class Voiture
     /**
      * @var Collection<int, ImageVoiture>
      */
-    #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: ImageVoiture::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: ImageVoiture::class, orphanRemoval: true, cascade:['persist'])]
     private Collection $imageVoitures;
 
     public function __construct()
@@ -206,6 +206,8 @@ class Voiture
         return $this;
     }
 
+   
+
     /**
      * @return Collection<int, ImageVoiture>
      */
@@ -235,5 +237,8 @@ class Voiture
 
         return $this;
     }
-    
+    public function __toString(): string
+    {
+        return $this->marque . ' ' . $this->modele;
+    }
 }
