@@ -40,7 +40,8 @@ class Voiture
     #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: DommageVoiture::class)]
     private Collection $dommageVoitures;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'], inversedBy: 'voiture')]
+    #[ORM\JoinColumn(nullable: false, unique: true)]
     private ?TypeVoiture $type = null;
 
     /**
