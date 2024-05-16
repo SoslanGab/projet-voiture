@@ -53,34 +53,27 @@ class VoitureCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        foreach ($entityInstance->getImageVoitures() as $imageVoiture) {
+        foreach ($entityInstance->getImageVoitures() as $key => $imageVoiture) {
             $file = $imageVoiture->getFile();
-            if ($file) {
-                // Vérifiez si le fichier temporaire existe avant de le manipuler
-                if (!file_exists($file->getPathname())) {
-                    throw new \Exception('Le fichier temporaire n\'existe pas ou n\'est pas lisible.');
-                }
+            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $imageVoiture->setNom($originalFilename);
+            $imageVoiture->setExtension($file->guessExtension());
+            $imageVoiture->setTaille($file->getSize());
+            // this is needed to safely include the file name as part of the URL
+            $safeFilename = $this->slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+            $imageVoiture->setUrl('/assets/images/' . $newFilename);
 
-                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $this->slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-
-                // Déplacez le fichier vers le répertoire de destination
-                try {
-                    $file->move($this->getParameter('image_voiture'), $newFilename);
-                } catch (FileException $e) {
-                    throw new \Exception('Erreur lors du déplacement du fichier: ' . $e->getMessage());
-                }
-
-                $imageVoiture->setUrl('/assets/images/voitures' . $newFilename);
-                $imageVoiture->setNom($originalFilename);
-                $imageVoiture->setExtension($file->guessExtension());
-                $imageVoiture->setTaille($file->getSize());
+            // Move the file to the directory where brochures are stored
+            try {
+                $file->move($this->getParameter('image_voiture'), $newFilename);
+            } catch (FileException $e) {
+                
+                // ... handle exception if something happens during file upload
             }
         }
-
         $entityManager->persist($entityInstance);
         $entityManager->flush();
+        
     }
 }
-
