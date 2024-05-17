@@ -10,13 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Repository\TypevoitureRepository;
 
 
 class VoituresController extends AbstractController
 {
     #[Route('/voitures', name: 'app_voitures')]
-    public function index(Request $request, VoitureRepository $voitureRepository): Response
+    public function index(Request $request, VoitureRepository $voitureRepository,TypevoitureRepository $typevoitureRepository ): Response
     {
         $marque = $request->query->get('marque');
         $type = $request->query->get('type');
@@ -30,17 +30,31 @@ class VoituresController extends AbstractController
         }
 
         $voitures = $voitureRepository->findBy($criteria);
-
-        // Récupérer toutes les marques et types pour le filtre
         $marques = $voitureRepository->findAllMarques();
-        $types = $voitureRepository->findAllTypes();
+       
 
-        return $this->render('voiture/index.html.twig', [
+        $types = $typevoitureRepository->findAll();
+        // dd($types);
+        return $this->render('Public/Voitures/index.html.twig', [
             'voitures' => $voitures,
             'marques' => $marques,
             'types' => $types,
         ]);
     }
+    #[Route('/voitures/{id}', name: 'app_details')]
+    public function details(int $id, VoitureRepository $voitureRepository): Response
+    {
+        $voiture = $voitureRepository->find($id);
+
+        if (!$voiture) {
+            throw $this->createNotFoundException('La voiture demandée n\'existe pas.');
+        }
+
+        return $this->render('Public/Voitures/details-voiture.html.twig', [
+            'voiture' => $voiture,
+        ]);
+    }
+    
 }
 
 

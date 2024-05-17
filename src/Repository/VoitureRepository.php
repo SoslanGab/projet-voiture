@@ -20,6 +20,12 @@ class VoitureRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Voiture::class);
     }
+    public function findAllMarques(){
+        $qb = $this->createQueryBuilder('v')
+            ->select('v.marque AS marque')
+            ->groupBy('marque');
+        return $qb->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Voiture[] Returns an array of Voiture objects

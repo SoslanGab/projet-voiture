@@ -36,7 +36,7 @@
                                     <select name="marque">
                                         <option value="">-- Toutes --</option>
                                         {% for marque in marques %}
-                                            <option value="{{ marque }}">{{ marque }}</option>
+                                            <option value="{{ marque["marque"] }}">{{ marque["marque"] }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -47,7 +47,7 @@
                                     <select name="type">
                                         <option value="">-- Tous --</option>
                                         {% for type in types %}
-                                            <option value="{{ type }}">{{ type }}</option>
+                                            <option value="{{ type.id }}">{{ type.type }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
