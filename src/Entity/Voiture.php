@@ -29,7 +29,7 @@ class Voiture
     private ?string $couleur = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
-    private ?string $prix_par_jour = null;
+    private ?string $prixParJour = null;
 
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $statut = null;
@@ -40,14 +40,15 @@ class Voiture
     #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: DommageVoiture::class)]
     private Collection $dommageVoitures;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?TypeVoiture $type = null;
 
     /**
      * @var Collection<int, ImageVoiture>
      */
     #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: ImageVoiture::class, orphanRemoval: true, cascade:['persist'])]
     private Collection $imageVoitures;
+
+    #[ORM\ManyToOne(inversedBy: 'voitures')]
+    private ?TypeVoiture $type = null;
 
     public function __construct()
     {
@@ -111,12 +112,12 @@ class Voiture
 
     public function getPrixParJour(): ?string
     {
-        return $this->prix_par_jour;
+        return $this->prixParJour;
     }
 
-    public function setPrixParJour(?string $prix_par_jour): static
+    public function setPrixParJour(?string $prixParJour): static
     {
-        $this->prix_par_jour = $prix_par_jour;
+        $this->prixParJour = $prixParJour;
 
         return $this;
     }
@@ -192,22 +193,8 @@ class Voiture
 
         return $this;
     }
- 
-
-    public function getType(): ?TypeVoiture
-    {
-        return $this->type;
-    }
-
-    public function setType(?TypeVoiture $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
    
-
     /**
      * @return Collection<int, ImageVoiture>
      */
@@ -240,5 +227,17 @@ class Voiture
     public function __toString(): string
     {
         return $this->marque . ' ' . $this->modele;
+    }
+
+    public function getType(): ?TypeVoiture
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeVoiture $type): static
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

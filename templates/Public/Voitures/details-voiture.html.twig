@@ -1,20 +1,20 @@
+{# templates/Public/Voitures/details-voiture.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Details voiture{% endblock %}
+{% block title %}Détails de la Voiture{% endblock %}
 
 {% block body %}
     
-  
     <!-- ***** Call to Action Start ***** -->
-    <section class="section section-bg" id="call-to-action" style="background-image: url(assets/images/banner-image-1-1920x500.jpg)">
+    <section class="section section-bg" id="call-to-action" style="background-image: url({{ asset('assets/images/banner-image-1-1920x500.jpg') }})">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 offset-lg-1">
                     <div class="cta-content">
                         <br>
                         <br>
-                        <h2><small><del>$12 999</del></small> <em>$11 779</em></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur.</p>
+                        <h2>{{ voiture.marque }} {{ voiture.modele }}</h2>
+                        <p>{{ voiture.prixParJour }} € par jour</p>
                     </div>
                 </div>
             </div>
@@ -30,20 +30,16 @@
 
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
               <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                {% for image in voiture.imageVoitures %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
+                {% endfor %}
               </ol>
               <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img class="d-block w-100" src="assets/images/car-image-1-1200x600.jpg" alt="First slide">
-                </div>
-                <div class="carousel-item">
-                  <img class="d-block w-100" src="assets/images/car-image-1-1200x600.jpg" alt="Second slide">
-                </div>
-                <div class="carousel-item">
-                  <img class="d-block w-100" src="assets/images/car-image-1-1200x600.jpg" alt="Third slide">
-                </div>
+                {% for image in voiture.imageVoitures %}
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                      <img class="d-block w-100" src="{{ asset('uploads/images/' ~ image.url) }}" alt="Slide {{ loop.index }}">
+                    </div>
+                {% endfor %}
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -61,142 +57,80 @@
             <div class="row" id="tabs">
               <div class="col-lg-4">
                 <ul>
-                  <li><a href='#tabs-1'><i class="fa fa-cog"></i> Vehicle Specs</a></li>
-                  <li><a href='#tabs-2'><i class="fa fa-info-circle"></i> Vehicle Description</a></li>
-                  <li><a href='#tabs-3'><i class="fa fa-plus-circle"></i> Vehicle Extras</a></li>
-                  <li><a href='#tabs-4'><i class="fa fa-phone"></i> Contact Details</a></li>
+                  <li><a href='#tabs-1'><i class="fa fa-cog"></i> Spécifications du Véhicule</a></li>
+                  <li><a href='#tabs-2'><i class="fa fa-info-circle"></i> Description du Véhicule</a></li>
+                  <li><a href='#tabs-3'><i class="fa fa-plus-circle"></i> Extras du Véhicule</a></li>
+                  <li><a href='#tabs-4'><i class="fa fa-phone"></i> Détails du Contact</a></li>
                 </ul>
               </div>
               <div class="col-lg-8">
                 <section class='tabs-content' style="width: 100%;">
                   <article id='tabs-1'>
-                    <h4>Vehicle Specs</h4>
-
+                    <h4>Spécifications du Véhicule</h4>
                     <div class="row">
                        <div class="col-sm-6">
-                            <label>Type</label>
-                       
-                            <p>Used vehicle</p>
+                            <label>Marque</label>
+                            <p>{{ voiture.marque }}</p>
                        </div>
-
                        <div class="col-sm-6">
-                            <label>Make</label>
-                       
-                            <p>Lorem ipsum dolor sit</p>
+                            <label>Modèle</label>
+                            <p>{{ voiture.modele }}</p>
                        </div>
-
                        <div class="col-sm-6">
-                            <label> Model</label>
-                       
-                            <p>Lorem ipsum dolor sit</p>
+                            <label>Année</label>
+                            <p>{{ voiture.annee|date('Y') }}</p>
                        </div>
-
                        <div class="col-sm-6">
-                            <label>First registration</label>
-                       
-                            <p>05/2010</p>
+                            <label>Couleur</label>
+                            <p>{{ voiture.couleur }}</p>
                        </div>
-
                        <div class="col-sm-6">
-                            <label>Mileage</label>
-                       
-                            <p>5000 km</p>
+                            <label>Prix par Jour</label>
+                            <p>{{ voiture.prixParJour }} €</p>
                        </div>
-
                        <div class="col-sm-6">
-                            <label>Fuel</label>
-                       
-                            <p>Diesel</p>
-                       </div>
-
-                       <div class="col-sm-6">
-                            <label>Engine size</label>
-                       
-                            <p>1800 cc</p>
-                       </div>
-
-                       <div class="col-sm-6">
-                            <label>Power</label>
-                       
-                            <p>85 hp</p>
-                       </div>
-
-
-                       <div class="col-sm-6">
-                            <label>Gearbox</label>
-                       
-                            <p>Manual</p>
-                       </div>
-
-                       <div class="col-sm-6">
-                            <label>Number of seats</label>
-                       
-                            <p>4</p>
-                       </div>
-
-                       <div class="col-sm-6">
-                            <label>Doors</label>
-                       
-                            <p>2/3</p>
-                       </div>
-
-                       <div class="col-sm-6">
-                            <label>Color</label>
-                       
-                            <p>Black</p>
+                            <label>Statut</label>
+                            <p>{{ voiture.statut }}</p>
                        </div>
                     </div>
                   </article>
                   <article id='tabs-2'>
-                    <h4>Vehicle Description</h4>
-                    
-                    <p>- Colour coded bumpers <br> - Tinted glass <br> - Immobiliser <br> - Central locking - remote <br> - Passenger airbag <br> - Electric windows <br> - Rear head rests <br> - Radio <br> - CD player <br> - Ideal first car <br> - Warranty <br> - High level brake light <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco                         laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat                     cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
+                    <h4>Description du Véhicule</h4>
+                    {# <p>{{ voiture.description }}</p>  #}
                    </article>
                   <article id='tabs-3'>
-                    <h4>Vehicle Extras</h4>
-
-                    <div class="row">   
+                    <h4>Extras du Véhicule</h4>
+                    <div class="row">
                         <div class="col-sm-6">
                             <p>ABS</p>
                         </div>
                         <div class="col-sm-6">
-                            <p>Leather seats</p>
+                            <p>Sièges en cuir</p>
                         </div>
                         <div class="col-sm-6">
-                            <p>Power Assisted Steering</p>
+                            <p>Direction assistée</p>
                         </div>
                         <div class="col-sm-6">
-                            <p>Electric heated seats</p>
+                            <p>Sièges chauffants</p>
                         </div>
                         <div class="col-sm-6">
-                            <p>New HU and AU</p>
+                            <p>Nouveau HU et AU</p>
                         </div>
                         <div class="col-sm-6">
-                            <p>Xenon headlights</p>
+                            <p>Phares au xénon</p>
                         </div>
                     </div>
                   </article>
                   <article id='tabs-4'>
-                    <h4>Contact Details</h4>
-
-                    <div class="row">   
+                    <h4>Louer le Véhicule</h4>
+                    <div class="row">
                         <div class="col-sm-6">
-                            <label>Name</label>
-
+                            <label>Nom</label>
                             <p>John Smith</p>
                         </div>
                         <div class="col-sm-6">
-                            <label>Phone</label>
-
-                            <p>123-456-789 </p>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Mobile phone</label>
-                            <p>456789123 </p>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Email</label>
-                            <p><a href="#">john@carsales.com</a></p>
+                            <label>Choisir les dates</label>
+                            <p> </p>
                         </div>
                     </div>
                   </article>
@@ -205,5 +139,4 @@
             </div>
         </div>
     </section>
-    
-{% endblock  %}
+{% endblock %}

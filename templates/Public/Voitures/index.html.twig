@@ -80,7 +80,7 @@
                     <div class="trainer-item">
                         <div class="image-thumb">
                             {% if voiture.imageVoitures|length > 0 %}
-                                <img src="{{ asset('uploads/images/' ~ voiture.imageVoitures[0].url) }}" alt="{{ voiture.marque }} {{ voiture.modele }}">
+                                <img src="{{ asset('../../../assets/images/' ~ voiture.imageVoitures[0].url) }}" alt="{{ voiture.marque }} {{ voiture.modele }}">
                             {% else %}
                                 <img src="{{ asset('../../../assets/images/logo-banner/banner_voitures.png') }}" alt="Image par défaut">
                             {% endif %}
