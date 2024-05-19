@@ -60,10 +60,16 @@
 			<div class="row" id="tabs">
 				<div class="col-lg-4">
 					<ul>
-						<li><a href='#tabs-1'><i class="fa fa-cog"></i>Spécifications du Véhicule</a></li>
+						<li>
+							<a href='#tabs-1'>
+								<i class="fa fa-cog"></i>Spécifications du Véhicule</a>
+						</li>
 						{# <li><a href='#tabs-2'><i class="fa fa-info-circle"></i>Description du Véhicule</a></li> #}
 						{# <li><a href='#tabs-3'><i class="fa fa-plus-circle"></i>Extras du Véhicule</a></li> #}
-						<li><a href='#tabs-4'><i class="fa fa-euro"></i>Louer</a></li>
+						<li>
+							<a href='#tabs-4'>
+								<i class="fa fa-euro"></i>Louer</a>
+						</li>
 					</ul>
 				</div>
 				<div class="col-lg-8">
@@ -99,35 +105,34 @@
 							</div>
 						</article>
 						{#<article id='tabs-2'>
-							<h4>Description du Véhicule</h4>
-							 <p>{{ voiture.description }}</p>  
-						</article>#}
+													<h4>Description du Véhicule</h4>
+													 <p>{{ voiture.description }}</p>  
+												</article>#}
 						{#<article id='tabs-3'>
-							<h4>Extras du Véhicule</h4>
-							<div class="row">
-								<div class="col-sm-6">
-									<p>ABS</p>
-								</div>
-								<div class="col-sm-6">
-									<p>Sièges en cuir</p>
-								</div>
-								<div class="col-sm-6">
-									<p>Direction assistée</p>
-								</div>
-								<div class="col-sm-6">
-									<p>Sièges chauffants</p>
-								</div>
-								<div class="col-sm-6">
-									<p>Nouveau HU et AU</p>
-								</div>
-								<div class="col-sm-6">
-									<p>Phares au xénon</p>
-								</div>
-							</div>
-						</article> #}
+													<h4>Extras du Véhicule</h4>
+													<div class="row">
+														<div class="col-sm-6">
+															<p>ABS</p>
+														</div>
+														<div class="col-sm-6">
+															<p>Sièges en cuir</p>
+														</div>
+														<div class="col-sm-6">
+															<p>Direction assistée</p>
+														</div>
+														<div class="col-sm-6">
+															<p>Sièges chauffants</p>
+														</div>
+														<div class="col-sm-6">
+															<p>Nouveau HU et AU</p>
+														</div>
+														<div class="col-sm-6">
+															<p>Phares au xénon</p>
+														</div>
+													</div>
+												</article> #}
 						<!-- Messages flash -->
-						{% for message in app.flashes('success') %}
-							<div class="alert alert-success">{{ message }}</div>
+							{% for message in app.flashes('success') %}<div class="alert alert-success"> {{ message }}</div>
 						{% endfor %}
 						{% for message in app.flashes('error') %}
 							<div class="alert alert-danger">{{ message }}</div>
@@ -137,23 +142,31 @@
 						<article id='tabs-4'>
 							<h4>Louer le Véhicule</h4>
 							<div class="row">
-								<div class="col-sm-6">
-									<label>Nom</label>
-									<p>{{ app.user.nom }}</p>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Nom</label>
+										<p>{{ app.user.nom }}</p>
+									</div>
 								</div>
-								<div class="col-sm-6">
-									<label>Choisir les dates</label>
-									{{ form_start(locationForm) }}
-									<div>
-										{{ form_row(locationForm.date_de_debut) }}
-										{{ form_row(locationForm.date_de_fin) }}
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Choisir les dates</label>
+										{{ form_start(locationForm) }}
+										<div class="form-row">
+											<div class="col">
+												{{ form_row(locationForm.date_de_debut, {'attr': {'class': 'form-control js-datepicker-start'}}) }}
+											</div>
+											<div class="col">
+												{{ form_row(locationForm.date_de_fin, {'attr': {'class': 'form-control js-datepicker-end'}}) }}
+											</div>
+										</div>
+										<div class="form-group mt-3">
+											<label>Total:</label>
+											<span id="total-price" class="font-weight-bold"></span>
+										</div>
+										<button type="submit" class="btn btn-primary mt-3">Louer</button>
+										{{ form_end(locationForm) }}
 									</div>
-									<div>
-										<label>Total:</label>
-										<span id="total-price"></span>
-									</div>
-									<button type="submit" class="btn btn-primary">Louer</button>
-									{{ form_end(locationForm) }}
 								</div>
 							</div>
 						</article>
@@ -162,35 +175,35 @@
 			</div>
 		</div>
 	</section>
-    <!-- Scripts pour les datepickers et le calcul du total -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const startDateInput = document.querySelector('.js-datepicker-start');
-            const endDateInput = document.querySelector('.js-datepicker-end');
-            const totalPriceSpan = document.getElementById('total-price');
-            
-            function calculateTotal() {
-                const startDate = new Date(startDateInput.value);
-                const endDate = new Date(endDateInput.value);
-                if (startDate && endDate && startDate < endDate) {
-                    const diffTime = Math.abs(endDate - startDate);
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    const pricePerDay = {{ voiture.prixParJour }};
-                    totalPriceSpan.innerText = diffDays * pricePerDay;
-                } else {
-                    totalPriceSpan.innerText = 0;
-                }
-            }
+	<!-- Scripts pour les datepickers et le calcul du total -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+const startDateInput = document.querySelector('.js-datepicker-start');
+const endDateInput = document.querySelector('.js-datepicker-end');
+const totalPriceSpan = document.getElementById('total-price');
 
-            startDateInput.addEventListener('change', calculateTotal);
-            endDateInput.addEventListener('change', calculateTotal);
-        });
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
-    <script>
-        flatpickr('.js-datepicker-start', {});
-        flatpickr('.js-datepicker-end', {});
-    </script>
+function calculateTotal() {
+const startDate = new Date(startDateInput.value);
+const endDate = new Date(endDateInput.value);
+if (startDate && endDate && startDate < endDate) {
+const diffTime = Math.abs(endDate - startDate);
+const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+const pricePerDay = {{ voiture.prixParJour }};
+totalPriceSpan.innerText = diffDays * pricePerDay;
+} else {
+totalPriceSpan.innerText = 0;
+}
+}
+
+startDateInput.addEventListener('change', calculateTotal);
+endDateInput.addEventListener('change', calculateTotal);
+});
+	</script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
+	<script>
+		flatpickr('.js-datepicker-start', {});
+flatpickr('.js-datepicker-end', {});
+	</script>
 {% endblock %}
 
