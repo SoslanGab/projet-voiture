@@ -1,142 +1,196 @@
 {# templates/Public/Voitures/details-voiture.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails de la Voiture{% endblock %}
+{% block title %}Détails de la Voiture
+{% endblock %}
 
 {% block body %}
-    
-    <!-- ***** Call to Action Start ***** -->
-    <section class="section section-bg" id="call-to-action" style="background-image: url({{ asset('assets/images/banner-image-1-1920x500.jpg') }})">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <div class="cta-content">
-                        <br>
-                        <br>
-                        <h2>{{ voiture.marque }} {{ voiture.modele }}</h2>
-                        <p>{{ voiture.prixParJour }} € par jour</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ***** Call to Action End ***** -->
 
-    <!-- ***** Fleet Starts ***** -->
-    <section class="section" id="trainers">
-        <div class="container">
-            <br>
-            <br>
+	<!-- ***** Call to Action Start ***** -->
+	<section class="section section-bg" id="call-to-action" style="background-image: url({{ asset('assets/images/banner-image-1-1920x500.jpg') }})">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="cta-content">
+						<br>
+						<br>
+						<h2>{{ voiture.marque }}
+							{{ voiture.modele }}</h2>
+						<p>{{ voiture.prixParJour }}
+							€ par jour</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- ***** Call to Action End ***** -->
 
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-              <ol class="carousel-indicators">
-                {% for image in voiture.imageVoitures %}
-                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
-                {% endfor %}
-              </ol>
-              <div class="carousel-inner">
-                {% for image in voiture.imageVoitures %}
-                    <div class="carousel-item {% if loop.first %}active{% endif %}">
-                      <img class="d-block w-100" src="{{ asset('uploads/images/' ~ image.url) }}" alt="Slide {{ loop.index }}">
-                    </div>
-                {% endfor %}
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
+	<!-- ***** Fleet Starts ***** -->
+	<section class="section" id="trainers">
+		<div class="container">
+			<br>
+			<br>
+
+			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+				<ol class="carousel-indicators">
+					{% for image in voiture.imageVoitures %}
+						<li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
+					{% endfor %}
+				</ol>
+				<div class="carousel-inner">
+					{% for image in voiture.imageVoitures %}
+						<div class="carousel-item {% if loop.first %}active{% endif %}">
+							<img class="d-block w-100" src="{{ asset('uploads/images/' ~ image.url) }}" alt="Slide {{ loop.index }}">
+						</div>
+					{% endfor %}
+				</div>
+				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+
+			<br>
+			<br>
+
+			<div class="row" id="tabs">
+				<div class="col-lg-4">
+					<ul>
+						<li><a href='#tabs-1'><i class="fa fa-cog"></i>Spécifications du Véhicule</a></li>
+						{# <li><a href='#tabs-2'><i class="fa fa-info-circle"></i>Description du Véhicule</a></li> #}
+						{# <li><a href='#tabs-3'><i class="fa fa-plus-circle"></i>Extras du Véhicule</a></li> #}
+						<li><a href='#tabs-4'><i class="fa fa-euro"></i>Louer</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-8">
+					<section class='tabs-content' style="width: 100%;">
+						<article id='tabs-1'>
+							<h4>Spécifications du Véhicule</h4>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Marque</label>
+									<p>{{ voiture.marque }}</p>
+								</div>
+								<div class="col-sm-6">
+									<label>Modèle</label>
+									<p>{{ voiture.modele }}</p>
+								</div>
+								<div class="col-sm-6">
+									<label>Année</label>
+									<p>{{ voiture.annee|date('Y') }}</p>
+								</div>
+								<div class="col-sm-6">
+									<label>Couleur</label>
+									<p>{{ voiture.couleur }}</p>
+								</div>
+								<div class="col-sm-6">
+									<label>Prix par Jour</label>
+									<p>{{ voiture.prixParJour }}
+										€</p>
+								</div>
+								<div class="col-sm-6">
+									<label>Statut</label>
+									<p>{{ voiture.statut }}</p>
+								</div>
+							</div>
+						</article>
+						{#<article id='tabs-2'>
+							<h4>Description du Véhicule</h4>
+							 <p>{{ voiture.description }}</p>  
+						</article>#}
+						{#<article id='tabs-3'>
+							<h4>Extras du Véhicule</h4>
+							<div class="row">
+								<div class="col-sm-6">
+									<p>ABS</p>
+								</div>
+								<div class="col-sm-6">
+									<p>Sièges en cuir</p>
+								</div>
+								<div class="col-sm-6">
+									<p>Direction assistée</p>
+								</div>
+								<div class="col-sm-6">
+									<p>Sièges chauffants</p>
+								</div>
+								<div class="col-sm-6">
+									<p>Nouveau HU et AU</p>
+								</div>
+								<div class="col-sm-6">
+									<p>Phares au xénon</p>
+								</div>
+							</div>
+						</article> #}
+						<!-- Messages flash -->
+						{% for message in app.flashes('success') %}
+							<div class="alert alert-success">{{ message }}</div>
+						{% endfor %}
+						{% for message in app.flashes('error') %}
+							<div class="alert alert-danger">{{ message }}</div>
+						{% endfor %}
+
+						<!-- Contenu de l'article pour la location -->
+						<article id='tabs-4'>
+							<h4>Louer le Véhicule</h4>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Nom</label>
+									<p>{{ app.user.nom }}</p>
+								</div>
+								<div class="col-sm-6">
+									<label>Choisir les dates</label>
+									{{ form_start(locationForm) }}
+									<div>
+										{{ form_row(locationForm.date_de_debut) }}
+										{{ form_row(locationForm.date_de_fin) }}
+									</div>
+									<div>
+										<label>Total:</label>
+										<span id="total-price"></span>
+									</div>
+									<button type="submit" class="btn btn-primary">Louer</button>
+									{{ form_end(locationForm) }}
+								</div>
+							</div>
+						</article>
+					</section>
+				</div>
+			</div>
+		</div>
+	</section>
+    <!-- Scripts pour les datepickers et le calcul du total -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startDateInput = document.querySelector('.js-datepicker-start');
+            const endDateInput = document.querySelector('.js-datepicker-end');
+            const totalPriceSpan = document.getElementById('total-price');
             
-            <br>
-            <br>
+            function calculateTotal() {
+                const startDate = new Date(startDateInput.value);
+                const endDate = new Date(endDateInput.value);
+                if (startDate && endDate && startDate < endDate) {
+                    const diffTime = Math.abs(endDate - startDate);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    const pricePerDay = {{ voiture.prixParJour }};
+                    totalPriceSpan.innerText = diffDays * pricePerDay;
+                } else {
+                    totalPriceSpan.innerText = 0;
+                }
+            }
 
-            <div class="row" id="tabs">
-              <div class="col-lg-4">
-                <ul>
-                  <li><a href='#tabs-1'><i class="fa fa-cog"></i> Spécifications du Véhicule</a></li>
-                  <li><a href='#tabs-2'><i class="fa fa-info-circle"></i> Description du Véhicule</a></li>
-                  <li><a href='#tabs-3'><i class="fa fa-plus-circle"></i> Extras du Véhicule</a></li>
-                  <li><a href='#tabs-4'><i class="fa fa-phone"></i> Détails du Contact</a></li>
-                </ul>
-              </div>
-              <div class="col-lg-8">
-                <section class='tabs-content' style="width: 100%;">
-                  <article id='tabs-1'>
-                    <h4>Spécifications du Véhicule</h4>
-                    <div class="row">
-                       <div class="col-sm-6">
-                            <label>Marque</label>
-                            <p>{{ voiture.marque }}</p>
-                       </div>
-                       <div class="col-sm-6">
-                            <label>Modèle</label>
-                            <p>{{ voiture.modele }}</p>
-                       </div>
-                       <div class="col-sm-6">
-                            <label>Année</label>
-                            <p>{{ voiture.annee|date('Y') }}</p>
-                       </div>
-                       <div class="col-sm-6">
-                            <label>Couleur</label>
-                            <p>{{ voiture.couleur }}</p>
-                       </div>
-                       <div class="col-sm-6">
-                            <label>Prix par Jour</label>
-                            <p>{{ voiture.prixParJour }} €</p>
-                       </div>
-                       <div class="col-sm-6">
-                            <label>Statut</label>
-                            <p>{{ voiture.statut }}</p>
-                       </div>
-                    </div>
-                  </article>
-                  <article id='tabs-2'>
-                    <h4>Description du Véhicule</h4>
-                    {# <p>{{ voiture.description }}</p>  #}
-                   </article>
-                  <article id='tabs-3'>
-                    <h4>Extras du Véhicule</h4>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p>ABS</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p>Sièges en cuir</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p>Direction assistée</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p>Sièges chauffants</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p>Nouveau HU et AU</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p>Phares au xénon</p>
-                        </div>
-                    </div>
-                  </article>
-                  <article id='tabs-4'>
-                    <h4>Louer le Véhicule</h4>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label>Nom</label>
-                            <p>John Smith</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Choisir les dates</label>
-                            <p> </p>
-                        </div>
-                    </div>
-                  </article>
-                </section>
-              </div>
-            </div>
-        </div>
-    </section>
+            startDateInput.addEventListener('change', calculateTotal);
+            endDateInput.addEventListener('change', calculateTotal);
+        });
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
+    <script>
+        flatpickr('.js-datepicker-start', {});
+        flatpickr('.js-datepicker-end', {});
+    </script>
 {% endblock %}
+
