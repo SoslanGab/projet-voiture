@@ -62,7 +62,7 @@ class VoitureCrudController extends AbstractCrudController
             // this is needed to safely include the file name as part of the URL
             $safeFilename = $this->slugger->slug($originalFilename);
             $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-            $imageVoiture->setUrl('/assets/images/' . $newFilename);
+            $imageVoiture->setUrl('assets/images/voitures/' . $newFilename);
 
             // Move the file to the directory where brochures are stored
             try {
