@@ -35,7 +35,7 @@
 				<div class="row">
 					<div class="col-lg-7 col-md-10 cta-content">
 						<h2 class="display-2 text-white">{{ salutation }}
-						<em>{{ app.user.prenom }}</em> </h2>
+						<em>{{ app.user.nom }}</em> </h2>
 						<p class="text-white mt-0 mb-5">Ceci est votre page de profil. Ici, vous pouvez voir le nombre de locations que vous avez effectuées et vous avez également la possibilité de modifier votre profil.</p>
 					</div>
 				</div>
@@ -57,20 +57,33 @@
 													{{ app.user.prenom }}
 												</p>
 											</div>
-											<span class="heading">0</span>
-											<span class="description">Location</span>
+											<span class="heading" id="locationsCount" style="cursor:pointer;">{{ locationsCount }}</span>
+                                            <span class="description">Location en cours{% if locationsCount != 1 %}s{% endif %}</span>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="text-center">
-								<div class="h5 font-weight-300">
-									<i class="ni location_pin mr-2"></i>loremmmmm loremmmmm
-								</div>
-								<div class="h5 mt-4">
-									<i class="ni business_briefcase-24 mr-2"></i>loremmmmm loremmmmm
-								</div>
-							</div>
+							 <div class="text-center" id="currentLocations" style="display: none;">
+                                {% if currentLocations is not empty %}
+                                    {% for location in currentLocations %}
+                                        <div class="h5 font-weight-300">
+                                            <i class="ni location_pin mr-2"></i>Marque: {{ location.voiture.marque }}
+											 <i class="ni business_briefcase-24 mr-2"></i>Modèle: {{ location.voiture.modele }}
+                                        </div>
+                                        <div class="h5 mt-4">
+                                            <i class="ni calendar-60 mr-2"></i>Date de début: {{ location.dateDeDebut|date('d/m/Y') }}
+											<i class="ni calendar-60 mr-2"></i>Date de fin: {{ location.dateDeFin|date('d/m/Y') }}
+                                        </div>
+                                        <div class="h5 mt-4">
+                                            <i class="ni calendar-60 mr-2"></i>Total : {{ location.TotalPaiement }} € 
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="h5 font-weight-300">
+                                        <i class="ni location_pin mr-2"></i>Vous n'avez actuellement aucune location en cours.
+                                    </div>
+                                {% endif %}
+                            </div>
 						</div>
 					</div>
 				</div>
@@ -129,6 +142,15 @@
 				</div>
 			</div>
 
-
+ 	<script>
+        document.getElementById('locationsCount').addEventListener('click', function() {
+            var currentLocations = document.getElementById('currentLocations');
+            if (currentLocations.style.display === 'none') {
+                currentLocations.style.display = 'block';
+            } else {
+                currentLocations.style.display = 'none';
+            }
+        });
+    </script>
 		{% endblock %}
 

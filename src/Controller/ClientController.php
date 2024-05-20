@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
+use App\Repository\LocationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +16,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class ClientController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
-    public function edit(Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager, LocationsRepository $locationsRepository): Response
     {
         /** @var Client $user */
         $client = $this->getUser();
         $form = $this->createForm(ClientType::class, $client);
+        $locationsCount = $locationsRepository->count(['client' => $client]);
+        $currentLocations = $locationsRepository->findBy(['client' => $client]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -41,6 +44,8 @@ class ClientController extends AbstractController
         return $this->render('Public/profile.html.twig', [
             'salutation' => $salutation,
             'client' => $client,
+            'currentLocations' => $currentLocations,
+            'locationsCount' => $locationsCount,
             'form' => $form->createView(),
         ]);
     }
