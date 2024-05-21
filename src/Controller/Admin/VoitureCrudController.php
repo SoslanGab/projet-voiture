@@ -33,6 +33,9 @@ class VoitureCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnIndex(),
             TextField::new('marque'),
             TextField::new('modele'),
+            TextField::new('annee'),
+            TextField::new('couleur'),
+            TextField::new('prix_par_jour'),
             AssociationField::new('type'),
             CollectionField::new('imageVoitures', 'Images')
             ->setEntryType(ImageVoitureType::class)

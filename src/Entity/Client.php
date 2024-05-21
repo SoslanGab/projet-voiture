@@ -60,6 +60,9 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Locations::class)]
     private Collection $locations;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $age = null;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -267,6 +270,18 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $email_verifie): static
     {
         $this->email_verifie = $email_verifie;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): static
+    {
+        $this->age = $age;
 
         return $this;
     }
