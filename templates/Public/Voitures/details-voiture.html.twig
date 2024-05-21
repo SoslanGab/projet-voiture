@@ -206,13 +206,18 @@ endDateInput.addEventListener('change', calculateTotal);
 	</script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
-	<script>
-		flatpickr('.js-datepicker-start', {
-			disable: ['2024-05-21', '2024-05-22', '2024-05-23']
-		});
-		flatpickr('.js-datepicker-end', {
-			disable: ['2024-05-21', '2024-05-22', '2024-05-23']
-		});
-	</script>
+	 <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const disabledDates = {{ disabledDates|json_encode|raw }};
+
+            flatpickr('.js-datepicker-start', {
+                disable: disabledDates
+            });
+
+            flatpickr('.js-datepicker-end', {
+                disable: disabledDates
+            });
+        });
+    </script>
 {% endblock %}
 

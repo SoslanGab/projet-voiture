@@ -47,26 +47,19 @@ class VoituresController extends AbstractController
     }
 
     #[Route('/voitures/{id}', name: 'app_details')]
-public function details(Request $request, Voiture $voiture, EntityManagerInterface $entityManager): Response
-{
-    $location = new Locations();
-    $locationForm = $this->createForm(LocationType::class, $location);
-    $locationForm->handleRequest($request);
-
-    if ($locationForm->isSubmitted()) {
-        // Vérifiez si l'utilisateur est connecté
-        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $this->addFlash('error', 'Vous devez être connecté pour louer une voiture.');
-            return $this->redirectToRoute('app_login');
-        }
-
-        if ($locationForm->isValid()) {
+    public function details(Request $request, Voiture $voiture, EntityManagerInterface $entityManager): Response
+    {
+        $location = new Locations();
+        $locationForm = $this->createForm(LocationType::class, $location);
+        $locationForm->handleRequest($request);
+    
+        if ($locationForm->isSubmitted() && $locationForm->isValid()) {
             $location->setVoiture($voiture);
             $location->setClient($this->getUser());
-
+    
             $dateDebut = $locationForm->get('date_de_debut')->getData();
             $dateFin = $locationForm->get('date_de_fin')->getData();
-
+    
             // Vérifiez la disponibilité
             $existingLocations = $entityManager->getRepository(Locations::class)->createQueryBuilder('l')
                 ->where('l.voiture = :voiture')
@@ -76,24 +69,44 @@ public function details(Request $request, Voiture $voiture, EntityManagerInterfa
                 ->setParameter('dateFin', $dateFin)
                 ->getQuery()
                 ->getResult();
-
+    
             if (count($existingLocations) > 0) {
                 $this->addFlash('error', 'Cette voiture est déjà louée pour les dates sélectionnées.');
             } else {
                 $totalPaiement = $voiture->getPrixParJour() * $dateDebut->diff($dateFin)->days;
                 $location->setTotalPaiement($totalPaiement);
-                $location->setStatus('en attente'); // Mettre le statut à "en attente"
                 $entityManager->persist($location);
                 $entityManager->flush();
-                $this->addFlash('success', 'La demande de location a été envoyée avec succès. Elle est en attente de validation.');
+                $this->addFlash('success', 'La voiture a été louée avec succès.');
                 return $this->redirectToRoute('app_details', ['id' => $voiture->getId()]);
             }
         }
+    
+        // Récupérer les dates de location existantes pour désactiver les dates
+        $existingDates = $entityManager->getRepository(Locations::class)->createQueryBuilder('l')
+            ->select('l.date_de_debut, l.date_de_fin')
+            ->where('l.voiture = :voiture')
+            ->setParameter('voiture', $voiture)
+            ->getQuery()
+            ->getResult();
+    
+        $disabledDates = [];
+        foreach ($existingDates as $dateRange) {
+            $start = $dateRange['date_de_debut']->format('Y-m-d');
+            $end = $dateRange['date_de_fin']->format('Y-m-d');
+            $current = strtotime($start);
+            $last = strtotime($end);
+    
+            while ($current <= $last) {
+                $disabledDates[] = date('Y-m-d', $current);
+                $current = strtotime('+1 day', $current);
+            }
+        }
+    
+        return $this->render('Public/Voitures/details-voiture.html.twig', [
+            'voiture' => $voiture,
+            'locationForm' => $locationForm->createView(),
+            'disabledDates' => $disabledDates,
+        ]);
     }
-
-    return $this->render('Public/Voitures/details-voiture.html.twig', [
-        'voiture' => $voiture,
-        'locationForm' => $locationForm->createView(),
-    ]);
-}
 }
