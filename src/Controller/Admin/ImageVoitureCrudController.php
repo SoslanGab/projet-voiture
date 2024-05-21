@@ -27,7 +27,9 @@ class ImageVoitureCrudController extends AbstractCrudController
             // TextField::new('type', 'Type de l\'image'),
             // TextField::new('taille', 'Taille de l\'image'),
             // TextField::new('extension', 'Extension de l\'image'),
-            ImageField::new('file', 'image')->setUploadDir('/public/assets/images/voitures'),
+            ImageField::new('file', 'image')
+                ->setUploadDir('public/assets/images/voitures')
+                ->setFormTypeOption('mapped', false), // Désactive l'AssetMapper
         ];
     }
 

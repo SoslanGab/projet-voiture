@@ -183,16 +183,16 @@ const endDateInput = document.querySelector('.js-datepicker-end');
 const totalPriceSpan = document.getElementById('total-price');
 
 function calculateTotal() {
-const startDate = new Date(startDateInput.value);
-const endDate = new Date(endDateInput.value);
-if (startDate && endDate && startDate < endDate) {
-const diffTime = Math.abs(endDate - startDate);
-const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-const pricePerDay = {{ voiture.prixParJour }};
-totalPriceSpan.innerText = diffDays * pricePerDay;
-} else {
-totalPriceSpan.innerText = 0;
-}
+	const startDate = new Date(startDateInput.value);
+	const endDate = new Date(endDateInput.value);
+	if (startDate && endDate && startDate < endDate) {
+		const diffTime = Math.abs(endDate - startDate);
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+		const pricePerDay = {{ voiture.prixParJour }};
+		totalPriceSpan.innerText = diffDays * pricePerDay;
+	} else {
+		totalPriceSpan.innerText = 0;
+	}
 }
 
 startDateInput.addEventListener('change', calculateTotal);
@@ -202,8 +202,12 @@ endDateInput.addEventListener('change', calculateTotal);
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
 	<script>
-		flatpickr('.js-datepicker-start', {});
-flatpickr('.js-datepicker-end', {});
+		flatpickr('.js-datepicker-start', {
+			disable: ['2024-05-21', '2024-05-22', '2024-05-23']
+		});
+		flatpickr('.js-datepicker-end', {
+			disable: ['2024-05-21', '2024-05-22', '2024-05-23']
+		});
 	</script>
 {% endblock %}
 
