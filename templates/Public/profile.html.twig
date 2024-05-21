@@ -63,27 +63,30 @@
 									</div>
 								</div>
 							</div>
-							 <div class="text-center" id="currentLocations" style="display: none;">
-                                {% if currentLocations is not empty %}
-                                    {% for location in currentLocations %}
-                                        <div class="h5 font-weight-300">
-                                            <i class="ni location_pin mr-2"></i>Marque: {{ location.voiture.marque }}
-											 <i class="ni business_briefcase-24 mr-2"></i>Modèle: {{ location.voiture.modele }}
-                                        </div>
-                                        <div class="h5 mt-4">
-                                            <i class="ni calendar-60 mr-2"></i>Date de début: {{ location.dateDeDebut|date('d/m/Y') }}
+							<div class="text-center" id="currentLocations" style="display: none;">
+								{% if currentLocations is not empty %}
+									{% for location in currentLocations %}
+										<div class="h5 font-weight-300">
+											<i class="ni location_pin mr-2"></i>Marque: {{ location.voiture.marque }}
+											<i class="ni business_briefcase-24 mr-2"></i>Modèle: {{ location.voiture.modele }}
+										</div>
+										<div class="h5 mt-4">
+											<i class="ni calendar-60 mr-2"></i>Date de début: {{ location.dateDeDebut|date('d/m/Y') }}
 											<i class="ni calendar-60 mr-2"></i>Date de fin: {{ location.dateDeFin|date('d/m/Y') }}
-                                        </div>
-                                        <div class="h5 mt-4">
-                                            <i class="ni calendar-60 mr-2"></i>Total : {{ location.TotalPaiement }} € 
-                                        </div>
-                                    {% endfor %}
-                                {% else %}
-                                    <div class="h5 font-weight-300">
-                                        <i class="ni location_pin mr-2"></i>Vous n'avez actuellement aucune location en cours.
-                                    </div>
-                                {% endif %}
-                            </div>
+										</div>
+										<div class="h5 mt-4">
+											<i class="ni calendar-60 mr-2"></i>Total : {{ location.totalPaiement }} €
+										</div>
+										<div class="h5 mt-4">
+											<i class="ni calendar-60 mr-2"></i>Statut : {{ location.status }}
+										</div>
+									{% endfor %}
+								{% else %}
+									<div class="h5 font-weight-300">
+										<i class="ni location_pin mr-2"></i>Vous n'avez actuellement aucune location en cours.
+									</div>
+								{% endif %}
+							</div>
 						</div>
 					</div>
 				</div>

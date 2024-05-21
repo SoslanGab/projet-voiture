@@ -113,46 +113,47 @@
 													 <p>{{ voiture.description }}</p>  
 												</article>#}
 						{#<article id='tabs-3'>
-													<h4>Extras du Véhicule</h4>
-													<div class="row">
-														<div class="col-sm-6">
-															<p>ABS</p>
-														</div>
-														<div class="col-sm-6">
-															<p>Sièges en cuir</p>
-														</div>
-														<div class="col-sm-6">
-															<p>Direction assistée</p>
-														</div>
-														<div class="col-sm-6">
-															<p>Sièges chauffants</p>
-														</div>
-														<div class="col-sm-6">
-															<p>Nouveau HU et AU</p>
-														</div>
-														<div class="col-sm-6">
-															<p>Phares au xénon</p>
-														</div>
-													</div>
-												</article> #}
+								<h4>Extras du Véhicule</h4>
+								<div class="row">
+									<div class="col-sm-6">
+										<p>ABS</p>
+									</div>
+									<div class="col-sm-6">
+										<p>Sièges en cuir</p>
+									</div>
+									<div class="col-sm-6">
+										<p>Direction assistée</p>
+									</div>
+									<div class="col-sm-6">
+										<p>Sièges chauffants</p>
+									</div>
+									<div class="col-sm-6">
+										<p>Nouveau HU et AU</p>
+									</div>
+									<div class="col-sm-6">
+										<p>Phares au xénon</p>
+									</div>
+								</div>
+							</article> #}
 						<!-- Messages flash -->
-							{% for message in app.flashes('success') %}<div class="alert alert-success"> {{ message }}</div>
-						{% endfor %}
-						{% for message in app.flashes('error') %}
-							<div class="alert alert-danger">{{ message }}</div>
-						{% endfor %}
+						
 
 						<!-- Contenu de l'article pour la location -->
 						<article id='tabs-4'>
 							<h4>Louer le Véhicule</h4>
+							{% for message in app.flashes('success') %}<div class="alert alert-success"> {{ message }}</div>
+							{% endfor %}
+							{% for message in app.flashes('error') %}
+								<div class="alert alert-danger">{{ message }}</div>
+							{% endfor %}
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label>Nom</label>
-										<p>{{ app.user.nom }}</p>
+										{# <label>Nom</label> #}
+										{# <p>{{ app.user.nom }}</p> #}
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<div class="form-group">
 										<label>Choisir les dates</label>
 										{{ form_start(locationForm) }}

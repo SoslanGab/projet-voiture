@@ -47,13 +47,20 @@ class VoituresController extends AbstractController
     }
 
     #[Route('/voitures/{id}', name: 'app_details')]
-    public function details(Request $request, Voiture $voiture, EntityManagerInterface $entityManager): Response
-    {
-        $location = new Locations();
-        $locationForm = $this->createForm(LocationType::class, $location);
-        $locationForm->handleRequest($request);
+public function details(Request $request, Voiture $voiture, EntityManagerInterface $entityManager): Response
+{
+    $location = new Locations();
+    $locationForm = $this->createForm(LocationType::class, $location);
+    $locationForm->handleRequest($request);
 
-        if ($locationForm->isSubmitted() && $locationForm->isValid()) {
+    if ($locationForm->isSubmitted()) {
+        // Vérifiez si l'utilisateur est connecté
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $this->addFlash('error', 'Vous devez être connecté pour louer une voiture.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if ($locationForm->isValid()) {
             $location->setVoiture($voiture);
             $location->setClient($this->getUser());
 
@@ -75,15 +82,18 @@ class VoituresController extends AbstractController
             } else {
                 $totalPaiement = $voiture->getPrixParJour() * $dateDebut->diff($dateFin)->days;
                 $location->setTotalPaiement($totalPaiement);
+                $location->setStatus('en attente'); // Mettre le statut à "en attente"
                 $entityManager->persist($location);
                 $entityManager->flush();
-                $this->addFlash('success', 'La voiture a été louée avec succès.');
+                $this->addFlash('success', 'La demande de location a été envoyée avec succès. Elle est en attente de validation.');
                 return $this->redirectToRoute('app_details', ['id' => $voiture->getId()]);
             }
         }
-        return $this->render('Public/Voitures/details-voiture.html.twig', [
-            'voiture' => $voiture,
-            'locationForm' => $locationForm->createView(),
-        ]);
     }
+
+    return $this->render('Public/Voitures/details-voiture.html.twig', [
+        'voiture' => $voiture,
+        'locationForm' => $locationForm->createView(),
+    ]);
+}
 }

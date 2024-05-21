@@ -28,8 +28,8 @@ class Locations
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $total_paiement = null;
 
-    #[ORM\Column(length: 40, nullable: true)]
-    private ?string $statut = null;
+    #[ORM\Column(type: 'string', length: 20, nullable: false)]
+    private ?string $status = 'en attente';
 
     #[ORM\ManyToOne(inversedBy: 'locations')]
     private ?Client $client = null;
@@ -95,14 +95,14 @@ class Locations
         return $this;
     }
 
-    public function getStatut(): ?string
+    public function getStatus(): ?string
     {
-        return $this->statut;
+        return $this->status;
     }
 
-    public function setStatut(?string $statut): static
+    public function setStatus(string $status): self
     {
-        $this->statut = $statut;
+        $this->status = $status;
 
         return $this;
     }
