@@ -40,7 +40,9 @@
 				<div class="carousel-inner">
 					{% for image in voiture.imageVoitures %}
 						<div class="carousel-item {% if loop.first %}active{% endif %}">
-							<img src="{{ asset( image.url ?? "not found" ) }}" alt="{{ voiture.marque }} {{ voiture.modele }}">
+							<div class="w-100 d-flex justify-content-center">
+								<img src="{{ asset( image.url ?? "not found" ) }}" alt="{{ voiture.marque }} {{ voiture.modele }}">
+							</div>
 						</div>
 					{% endfor %}
 				</div>
