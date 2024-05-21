@@ -75,13 +75,13 @@
 											<i class="ni calendar-60 mr-2"></i>Date de fin: {{ location.dateDeFin|date('d/m/Y') }}
 										</div>
 										<div class="h5 mt-4">
-											<i class="ni calendar-60 mr-2"></i>Total : {{ location.totalPaiement }} €
+											<i class="ni calendar-60 mr-2"></i>Total: {{ location.totalPaiement }} €
 										</div>
 										<div class="h5 mt-4">
-											<i class="ni calendar-60 mr-2"></i>Statut : {{ location.status }}
+											<i class="ni calendar-60 mr-2"></i>Statut: {{ location.status }}
 										</div>
 									{% endfor %}
-								{% else %}
+									{% else %}
 									<div class="h5 font-weight-300">
 										<i class="ni location_pin mr-2"></i>Vous n'avez actuellement aucune location en cours.
 									</div>

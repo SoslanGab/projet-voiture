@@ -16,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -46,6 +45,7 @@ class LocationsCrudController extends AbstractCrudController
             ChoiceField::new('status')->setChoices([
                 'En attente' => 'en attente',
                 'Confirmée' => 'confirmée',
+                'Refusée' => 'refusée',
             ]),
         ];
     }
@@ -56,12 +56,21 @@ class LocationsCrudController extends AbstractCrudController
             ->linkToCrudAction('confirmLocation')
             ->addCssClass('btn btn-success')
             ->displayIf(function (Locations $entity) {
-                return $entity->getStatus() !== 'confirmée';
+                return $entity->getStatus() === 'en attente';
+            });
+
+        $refuse = Action::new('refuse', 'Refuser la location')
+            ->linkToCrudAction('refuseLocation')
+            ->addCssClass('btn btn-danger')
+            ->displayIf(function (Locations $entity) {
+                return $entity->getStatus() === 'en attente';
             });
 
         return $actions
             ->add(Crud::PAGE_INDEX, $confirm)
-            ->add(Crud::PAGE_DETAIL, $confirm);
+            ->add(Crud::PAGE_INDEX, $refuse)
+            ->add(Crud::PAGE_DETAIL, $confirm)
+            ->add(Crud::PAGE_DETAIL, $refuse);
     }
 
     public function confirmLocation(AdminContext $context): RedirectResponse
@@ -71,6 +80,18 @@ class LocationsCrudController extends AbstractCrudController
         $this->entityManager->flush();
 
         $this->addFlash('success', 'La location a été confirmée avec succès.');
+
+        // Rediriger vers la liste des locations
+        return $this->redirect($this->generateUrl('app_admin'));
+    }
+
+    public function refuseLocation(AdminContext $context): RedirectResponse
+    {
+        $location = $context->getEntity()->getInstance();
+        $location->setStatus('refusée');
+        $this->entityManager->flush();
+
+        $this->addFlash('error', 'La location a été refusée.');
 
         // Rediriger vers la liste des locations
         return $this->redirect($this->generateUrl('app_admin'));
