@@ -52,6 +52,17 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <label>Couleur:</label>
+                                    <select name="couleur">
+                                        <option value="">-- Tous --</option>
+                                        {% for couleur in couleurs %}
+                                            <option value="{{ couleur["couleur"] }}">{{ couleur["couleur"] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-sm-4 offset-sm-4">
                                 <div class="main-button text-center">
                                     <button type="submit" class="btn btn-primary">Search</button>
@@ -81,7 +92,7 @@
                         <div class="image-thumb">
                             {% if voiture.imageVoitures|length > 0 %}
                                
-                                {{ dump(voiture.imageVoitures[0].url) }}
+                                {# {{ dump(voiture.imageVoitures[0].url) }} #}
                                 <img src="{{ asset( voiture.imageVoitures[0].url ?? "not found" ) }}" alt="{{ voiture.marque }} {{ voiture.modele }}">
                             {% else %}
                                 
@@ -92,8 +103,12 @@
                         <div class="down-content">
                             <h4>{{ voiture.marque }} {{ voiture.modele }}</h4>
                             <p>
-                                <i class="fa fa-cog"></i> {{ voiture.couleur}}
-                                <i class="fa fa-euro"></i> {{ voiture.type}}
+                                <i class="fa-solid fa-droplet"></i> {{ voiture.couleur}}
+                                <i class="fa fa-car"></i> {{ voiture.type}}
+                                <i class="fa-solid fa-horse"></i> {{ voiture.chevaux}}
+                            </p>
+                            <p>
+                                <i class="fa-solid fa-euro"></i> {{ voiture.prixParJour }}
                             </p>
                             <ul class="social-icons">
                                 <li><a href="{{ path('app_details', {'id': voiture.id}) }}">+ Voir la voiture</a></li>

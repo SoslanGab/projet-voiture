@@ -26,6 +26,13 @@ class VoitureRepository extends ServiceEntityRepository
             ->groupBy('marque');
         return $qb->getQuery()->getResult();
     }
+    
+    public function findAllCouleurs(){
+        $qb = $this->createQueryBuilder('v')
+            ->select('v.couleur AS couleur')
+            ->groupBy('couleur');
+        return $qb->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Voiture[] Returns an array of Voiture objects

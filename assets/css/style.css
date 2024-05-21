@@ -932,6 +932,8 @@ trainers
 }
 
 #trainers .trainer-item img {
+  height: 290px;
+  object-fit: cover;
   width: 100%;
   border-radius: 5px;
 }

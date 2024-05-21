@@ -20,6 +20,7 @@ class VoituresController extends AbstractController
     {
         $marque = $request->query->get('marque');
         $type = $request->query->get('type');
+        $couleur = $request->query->get('couleur');
 
         $criteria = [];
         if ($marque) {
@@ -28,15 +29,20 @@ class VoituresController extends AbstractController
         if ($type) {
             $criteria['type'] = $type;
         }
+        if($couleur) {
+            $criteria['couleur'] = $couleur;
+        }
 
         $voitures = $voitureRepository->findBy($criteria);
         $marques = $voitureRepository->findAllMarques();
         $types = $typevoitureRepository->findAll();
+        $couleurs = $voitureRepository->findAllCouleurs();
 
         return $this->render('Public/Voitures/index.html.twig', [
             'voitures' => $voitures,
             'marques' => $marques,
             'types' => $types,
+            'couleurs' => $couleurs,
         ]);
     }
 
@@ -75,7 +81,6 @@ class VoituresController extends AbstractController
                 return $this->redirectToRoute('app_details', ['id' => $voiture->getId()]);
             }
         }
-
         return $this->render('Public/Voitures/details-voiture.html.twig', [
             'voiture' => $voiture,
             'locationForm' => $locationForm->createView(),
