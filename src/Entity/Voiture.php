@@ -22,8 +22,8 @@ class Voiture
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $modele = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $annee = null;
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $annee = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $couleur = null;
@@ -49,6 +49,9 @@ class Voiture
 
     #[ORM\ManyToOne(inversedBy: 'voitures')]
     private ?TypeVoiture $type = null;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $chevaux = null;
 
     public function __construct()
     {
@@ -86,15 +89,14 @@ class Voiture
         return $this;
     }
 
-    public function getAnnee(): ?\DateTimeInterface
+    public function getAnnee(): ?int
     {
         return $this->annee;
     }
-
-    public function setAnnee(?\DateTimeInterface $annee): static
+    
+    public function setAnnee(?int $annee): self
     {
         $this->annee = $annee;
-
         return $this;
     }
 
@@ -238,6 +240,17 @@ class Voiture
     {
         $this->type = $type;
 
+        return $this;
+    }
+
+    public function getChevaux(): ?int
+    {
+        return $this->chevaux;
+    }
+    
+    public function setChevaux(?int $chevaux): self
+    {
+        $this->chevaux = $chevaux;
         return $this;
     }
 }

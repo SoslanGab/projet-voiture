@@ -20,6 +20,7 @@ class ClientType extends AbstractType
             ->add('prenom')
             ->add('adresse')
             ->add('telephone')
+            ->add('age')
             // ->add('derniere_connexion', null, [
             //     'widget' => 'single_text',
             // ])

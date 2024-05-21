@@ -12,8 +12,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\CollectionType;
 use App\Form\ImageVoitureType;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
 class VoitureCrudController extends AbstractCrudController
 {
@@ -33,7 +35,8 @@ class VoitureCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnIndex(),
             TextField::new('marque'),
             TextField::new('modele'),
-            TextField::new('annee'),
+            IntegerField::new('annee')->setLabel('Année')->setHelp('Entrez une année valide.'),
+            IntegerField::new('chevaux')->setLabel('Chevaux'),
             TextField::new('couleur'),
             TextField::new('prix_par_jour'),
             AssociationField::new('type'),
