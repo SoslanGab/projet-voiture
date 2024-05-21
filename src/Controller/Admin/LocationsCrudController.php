@@ -16,8 +16,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LocationsCrudController extends AbstractCrudController
 {
@@ -53,7 +54,10 @@ class LocationsCrudController extends AbstractCrudController
     {
         $confirm = Action::new('confirm', 'Confirmer la location')
             ->linkToCrudAction('confirmLocation')
-            ->addCssClass('btn btn-success');
+            ->addCssClass('btn btn-success')
+            ->displayIf(function (Locations $entity) {
+                return $entity->getStatus() !== 'confirmée';
+            });
 
         return $actions
             ->add(Crud::PAGE_INDEX, $confirm)
@@ -68,8 +72,13 @@ class LocationsCrudController extends AbstractCrudController
 
         $this->addFlash('success', 'La location a été confirmée avec succès.');
 
-        return $this->redirect($context->getReferrer());
+        // Rediriger vers la liste des locations
+        return $this->redirect($this->generateUrl('app_admin'));
     }
 }
+
+
+
+
 
 
