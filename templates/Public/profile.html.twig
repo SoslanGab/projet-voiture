@@ -80,6 +80,14 @@
 										<div class="h5 mt-4">
 											<i class="ni calendar-60 mr-2"></i>Statut: {{ location.status }}
 										</div>
+										<hr>
+										<div class="h5 mt-4">
+											{% if location.status == 'confirmée' %}
+												Veuillez vous rapprocher de notre agence dans 2 jours hors jours fériés et week-ends pour pouvoir récupérer la voiture.
+											{% elseif location.status == 'refusée' %}
+												Veuillez nous contacter via notre formulaire de contact pour plus d'informations.
+											{% endif %}
+										</div>
 									{% endfor %}
 									{% else %}
 									<div class="h5 font-weight-300">
@@ -148,36 +156,40 @@
 					</div>
 				</div>
 			</div>
-
- 	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			var disabledDates = {{ disabledDates|json_encode|raw }};
-			
-			flatpickr('.js-datepicker-start', {
-				disable: disabledDates,
-				onChange: function (selectedDates, dateStr, instance) {
-					// Réinitialiser la date de fin si la date de début change
-					instance.element.form.querySelector('.js-datepicker-end')._flatpickr.set('minDate', dateStr);
-					instance.element.form.querySelector('.js-datepicker-end')._flatpickr.setDate(dateStr);
+<script>
+	document.getElementById('locationsCount').addEventListener('click', function() {
+				var currentLocations = document.getElementById('currentLocations');
+				if (currentLocations.style.display === 'none') {
+					currentLocations.style.display = 'block';
+				} else {
+					currentLocations.style.display = 'none';
 				}
 			});
+    document.addEventListener('DOMContentLoaded', function () {
+        var disabledDates = {{ disabledDates|json_encode|raw }};
 
-			flatpickr('.js-datepicker-end', {
-				disable: disabledDates,
-				onChange: function (selectedDates, dateStr, instance) {
-					var startDate = instance.element.form.querySelector('.js-datepicker-start')._flatpickr.selectedDates[0];
-					var endDate = instance.selectedDates[0];
+        flatpickr('.js-datepicker-start', {
+            disable: disabledDates,
+            onChange: function (selectedDates, dateStr, instance) {
+                instance.element.form.querySelector('.js-datepicker-end')._flatpickr.set('minDate', dateStr);
+                instance.element.form.querySelector('.js-datepicker-end')._flatpickr.setDate(dateStr);
+            }
+        });
 
-					if (startDate && endDate) {
-						var diffTime = Math.abs(endDate - startDate);
-						var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-						var prixParJour = {{ voiture.prixParJour }};
-						var total = diffDays * prixParJour;
-						document.getElementById('total-price').textContent = total.toFixed(2) + ' €';
-					}
-				}
-			});
-		});
-	</script>
+        flatpickr('.js-datepicker-end', {
+            disable: disabledDates,
+            onChange: function (selectedDates, dateStr, instance) {
+                var startDate = instance.element.form.querySelector('.js-datepicker-start')._flatpickr.selectedDates[0];
+                var endDate = instance.selectedDates[0];
+
+                if (startDate && endDate) {
+                    var diffTime = Math.abs(endDate - startDate);
+                    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    // Si vous avez besoin de calculer quelque chose avec le nombre de jours, ajoutez-le ici
+                }
+            }
+        });
+    });
+</script>
 		{% endblock %}
 

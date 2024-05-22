@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Locations;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
 use App\Repository\LocationsRepository;
@@ -18,7 +19,7 @@ class ClientController extends AbstractController
     #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, LocationsRepository $locationsRepository): Response
     {
-        /** @var Client $user */
+        /** @var Client $client */
         $client = $this->getUser();
         $form = $this->createForm(ClientType::class, $client);
         $locationsCount = $locationsRepository->count(['client' => $client]);
@@ -30,15 +31,30 @@ class ClientController extends AbstractController
 
             return $this->redirectToRoute('app_profile', [], Response::HTTP_SEE_OTHER);
         }
-        // Dire Bonjour ou Bonsoir selon le fuseaux horaire
-        $heure = date('H');
 
-        if ($heure < 12) {
-            $salutation = 'Bonjour';
-        } elseif ($heure < 18) {
-            $salutation = 'Bonjour';
-        } else {
-            $salutation = 'Bonsoir';
+        // Dire Bonjour ou Bonsoir selon le fuseau horaire
+        $heure = date('H');
+        $salutation = ($heure < 18) ? 'Bonjour' : 'Bonsoir';
+
+        // Récupérer les dates de location existantes pour désactiver les dates
+        $existingDates = $entityManager->getRepository(Locations::class)->createQueryBuilder('l')
+            ->select('l.date_de_debut, l.date_de_fin')
+            ->where('l.client = :client')
+            ->setParameter('client', $client)
+            ->getQuery()
+            ->getResult();
+
+        $disabledDates = [];
+        foreach ($existingDates as $dateRange) {
+            $start = $dateRange['date_de_debut']->format('Y-m-d');
+            $end = $dateRange['date_de_fin']->format('Y-m-d');
+            $current = strtotime($start);
+            $last = strtotime($end);
+
+            while ($current <= $last) {
+                $disabledDates[] = date('Y-m-d', $current);
+                $current = strtotime('+1 day', $current);
+            }
         }
 
         return $this->render('Public/profile.html.twig', [
@@ -47,6 +63,7 @@ class ClientController extends AbstractController
             'currentLocations' => $currentLocations,
             'locationsCount' => $locationsCount,
             'form' => $form->createView(),
+            'disabledDates' => $disabledDates,
         ]);
     }
 

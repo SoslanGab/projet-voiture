@@ -82,7 +82,7 @@ class LocationsCrudController extends AbstractCrudController
         $this->addFlash('success', 'La location a été confirmée avec succès.');
 
         // Rediriger vers la liste des locations
-        return $this->redirect($this->generateUrl('easyadmin'));
+        return $this->redirect($this->generateUrl('app_admin'));
     }
 
     public function refuseLocation(AdminContext $context): RedirectResponse
@@ -93,7 +93,7 @@ class LocationsCrudController extends AbstractCrudController
 
         $this->addFlash('error', 'La location a été refusée.');
 
-        // Rediriger vers la liste des locations
+        
         return $this->redirect($this->generateUrl('easyadmin'));
     }
 }
