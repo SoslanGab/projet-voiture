@@ -41,7 +41,7 @@ class LocationsCrudController extends AbstractCrudController
             AssociationField::new('client'),
             DateField::new('date_de_debut'),
             DateField::new('date_de_fin'),
-            MoneyField::new('total_paiement')->setCurrency('EUR'),
+            MoneyField::new('total_paiement')->setCurrency('EUR')->setStoredAsCents( false),
             ChoiceField::new('status')->setChoices([
                 'En attente' => 'en attente',
                 'Confirmée' => 'confirmée',
