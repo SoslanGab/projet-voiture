@@ -150,14 +150,34 @@
 			</div>
 
  	<script>
-        document.getElementById('locationsCount').addEventListener('click', function() {
-            var currentLocations = document.getElementById('currentLocations');
-            if (currentLocations.style.display === 'none') {
-                currentLocations.style.display = 'block';
-            } else {
-                currentLocations.style.display = 'none';
-            }
-        });
-    </script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var disabledDates = {{ disabledDates|json_encode|raw }};
+			
+			flatpickr('.js-datepicker-start', {
+				disable: disabledDates,
+				onChange: function (selectedDates, dateStr, instance) {
+					// Réinitialiser la date de fin si la date de début change
+					instance.element.form.querySelector('.js-datepicker-end')._flatpickr.set('minDate', dateStr);
+					instance.element.form.querySelector('.js-datepicker-end')._flatpickr.setDate(dateStr);
+				}
+			});
+
+			flatpickr('.js-datepicker-end', {
+				disable: disabledDates,
+				onChange: function (selectedDates, dateStr, instance) {
+					var startDate = instance.element.form.querySelector('.js-datepicker-start')._flatpickr.selectedDates[0];
+					var endDate = instance.selectedDates[0];
+
+					if (startDate && endDate) {
+						var diffTime = Math.abs(endDate - startDate);
+						var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+						var prixParJour = {{ voiture.prixParJour }};
+						var total = diffDays * prixParJour;
+						document.getElementById('total-price').textContent = total.toFixed(2) + ' €';
+					}
+				}
+			});
+		});
+	</script>
 		{% endblock %}
 

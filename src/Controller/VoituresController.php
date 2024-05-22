@@ -1,5 +1,7 @@
 <?php
 
+// src/Controller/VoituresController.php
+
 namespace App\Controller;
 
 use App\Entity\Voiture;
@@ -29,7 +31,7 @@ class VoituresController extends AbstractController
         if ($type) {
             $criteria['type'] = $type;
         }
-        if($couleur) {
+        if ($couleur) {
             $criteria['couleur'] = $couleur;
         }
 
@@ -109,4 +111,6 @@ class VoituresController extends AbstractController
             'disabledDates' => $disabledDates,
         ]);
     }
+    
 }
+
