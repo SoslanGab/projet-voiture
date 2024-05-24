@@ -33,6 +33,17 @@ class VoitureRepository extends ServiceEntityRepository
             ->groupBy('couleur');
         return $qb->getQuery()->getResult();
     }
+    public function findMostRented(int $limit): array
+    {
+        return $this->createQueryBuilder('v')
+            ->select('v, COUNT(l.id) AS HIDDEN rentals')
+            ->leftJoin('v.locations', 'l')
+            ->groupBy('v.id')
+            ->orderBy('rentals', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Voiture[] Returns an array of Voiture objects

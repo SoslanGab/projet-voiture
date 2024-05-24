@@ -1,0 +1,6 @@
+# Allow all robots to access the entire site
+User-agent: *
+Disallow:
+
+# Block access to the admin area
+Disallow: /admin/

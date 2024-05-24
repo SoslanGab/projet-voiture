@@ -24,47 +24,48 @@
 
    <!-- ***** Les cards nos voitures ***** -->
     <section class="section" id="trainers">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <div class="section-heading">
-                        <h2>nos <em>voitures</em></h2>
-                        <img src="assets/images/voitures/line-dec.png" alt="">
-                        <p>Voici nos voitures disponible en location</p>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+                    <h2>Nos <em>voitures</em></h2>
+                    <img src="{{ asset('assets/images/voitures/line-dec.png') }}" alt="">
+                    <p>Voici nos voitures disponibles en location</p>
                 </div>
             </div>
-            <div class="row">  
+        </div>
+        <div class="row">
+            {% for voiture in voitures %}
                 <div class="col-lg-4 mx-auto">
                     <div class="trainer-item">
                         <div class="image-thumb">
-                            <img src="../assets/images/voitures/<?php echo $cars['nom_img'] ?>" alt="">
+                            {% if voiture.imageVoitures|length > 0 %}
+                                <img src="{{ asset( voiture.imageVoitures[0].url ?? "not found" ) }}" alt="{{ voiture.marque }} {{ voiture.modele }}">
+                            {% else %}
+                                <img src="{{ asset('assets/images/logo-banner/banner_voitures.png') }}" alt="Image par défaut">
+                            {% endif %}
                         </div>
                         <div class="down-content">
-                
-                            <h4></h4>
-
-                            <p>
-                                <i class="fa fa-dashboard"></i> chevaux ch
-                                <i class="fa fa-cube"></i>cylindree
-                                <i class="fa fa-cog"></i>transmission
+                            <h4>{{ voiture.marque }} {{ voiture.modele }}</h4>
+                            
+                                <i class="fa fa-dashboard"></i> {{ voiture.chevaux }} ch
+                                <i class="fa fa-color"></i> {{ voiture.couleur }}
+                                <i class="fa fa-euro"></i> {{ voiture.prixParJour }} €
                             </p>
-
                             <ul class="social-icons">
-                                <li><a href="index.php">+ Voir la voiture</a></li>
+                                <li><a href="{{ path('app_details', {'id': voiture.id}) }}">+ Voir la voiture</a></li>
                             </ul>
                         </div>
                     </div>
-                </div>  
-            </div>
-
-            <br>
-
-            <div class="button_principale text-center">
-                <a href="">Voir tout</a>
-            </div>
+                </div>
+            {% endfor %}
         </div>
-    </section>
+        <br>
+        <div class="button_principale text-center">
+            <a href="{{ path('app_voitures') }}">Voir tout</a>
+        </div>
+    </div>
+</section>
     <!-- ***** Fin des cards ***** -->
 
     
